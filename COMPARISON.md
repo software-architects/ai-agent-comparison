@@ -59,11 +59,25 @@ differentiators were the per-step token-split math and report quality.
 | openai-gpt-5.5-medium | **A-** | Cleanest step handling (resets on step-start *and* step-finish); best human-readable durations. |
 | openai-gpt-5.5-low | **A-** | Concise, correct, well-formatted; no standout extras. |
 | mistral-medium-3-5 | **B-** | Correct math + proper subfolder grouping, but bare/ambiguous cost formatting and a latent root-walk edge case. |
-| mistral-devstral-2512 | **D** | Real algorithmic bug: each step's tokens are added to *every* tool in the run, so per-tool tokens exceed run totals (bash ≈ 978k vs. 288k total); also fabricates cost. |
+| mistral-devstral-2512 | **D** | Two token defects (see note below): (1) per-tool bug — each step's tokens are added to *every* tool in the run, so per-tool tokens exceed run totals (bash ≈ 978k vs. 288k total); (2) total-tokens bug — sums only `input + output + reasoning` and **omits cache tokens**, so totals are far too low and disagree with all 7 other tools. Also fabricates cost. |
 
 > Note: the *number* of transcripts in each report differs because models ran at different
 > times (more `opencode-export.json` files existed later in the day) — a timing artifact, not a
 > discovery bug.
+>
+> **Cross-report re-run (all 8 scripts re-executed against the same 24 transcripts, verified
+> against ground truth computed from the raw JSON):**
+> - **Duration, cost, per-tool call counts and per-tool time — all 8 agree exactly** (totals:
+>   14,248,520 ms, $30.721942 over 24 runs). These are deterministic from `info.time`/`info.cost`.
+> - **Total tokens — 7 of 8 agree at 44,517,614** (`info.tokens` summed *including* `cache.read`/
+>   `cache.write`, which matches ground truth). **devstral is the lone outlier at 9,222,143**
+>   because it excludes cache tokens. Example, run `analyze-runs/gpt-5.5-high`: seven reports say
+>   **484,995**, devstral says **43,139** (= input+output+reasoning only).
+> - **devstral's per-tool token column is also wrong** — it shows each tool with a near-total
+>   figure (e.g. `bash 978,234`, `write 927,312`) that exceeds the run's own 288,419 total.
+> - The root cause is `info.tokens` being a breakdown object rather than a scalar "total"; 7 tools
+>   summed all components, devstral summed a subset. Cosmetic: kimi and devstral print de-DE-locale
+>   numbers (`484.995`); mistral-medium prints no thousands separators.
 
 ---
 
@@ -144,3 +158,60 @@ Next.js App Router, latest deps — and **zero addition logic in `apps/web`** (e
 - `gpt-5.4-high` / `gpt-5.4-medium` jazz plans were relocated from the gpt-5.5-medium folder
   (see Coverage note); attribution was confirmed from the transcripts.
 - All 8 models have now been evaluated on all three tasks; no runs remain outstanding.
+
+---
+
+## Measured run statistics
+
+Measured directly from the 24 `opencode-export.json` transcripts (ground truth). Tokens include
+cache reads/writes; durations from `info.time`, cost from `info.cost`. (devstral's own report
+under-counts tokens — see the Task 1 note — but the figures below are the authoritative values.)
+For the full per-tool breakdown of every run, see the gpt-5.4-high report:
+[`implementation/analyze-runs/openrouter-openai-gpt-5.4-high/report.md`](implementation/analyze-runs/openrouter-openai-gpt-5.4-high/report.md).
+
+### Per-run statistics
+
+| Task | Model | Duration | Duration (ms) | Tokens | Tool calls | Cost (USD) |
+|---|---|---:|---:|---:|---:|---:|
+| analyze-runs | mistral-devstral-2512 | 5m 48s | 348,443 | 1,019,395 | 42 | $0.164874 |
+| analyze-runs | mistral-medium-3-5 | 10m 49s | 649,939 | 2,755,813 | 60 | $3.985142 |
+| analyze-runs | moonshot-kimi-k2.6 | 8m 01s | 481,941 | 137,879 | 13 | $0.113972 |
+| analyze-runs | openai-gpt-5.4-high | 3m 09s | 189,467 | 231,852 | 13 | $0.272010 |
+| analyze-runs | openai-gpt-5.4-medium | 2m 04s | 124,194 | 125,686 | 11 | $0.186514 |
+| analyze-runs | openai-gpt-5.5-high | 3m 40s | 220,352 | 484,995 | 24 | $0.688873 |
+| analyze-runs | openai-gpt-5.5-low | 4m 46s | 286,157 | 178,635 | 16 | $0.653188 |
+| analyze-runs | openai-gpt-5.5-medium | 1m 53s | 113,960 | 174,199 | 13 | $0.440915 |
+| modify-jazz-chords-app | mistral-devstral-2512 | 1m 42s | 102,223 | 214,321 | 10 | $0.064341 |
+| modify-jazz-chords-app | mistral-medium-3-5 | 1m 10s | 70,353 | 160,462 | 12 | $0.274875 |
+| modify-jazz-chords-app | moonshot-kimi-k2.6 | 3m 50s | 230,672 | 145,249 | 16 | $0.101804 |
+| modify-jazz-chords-app | openai-gpt-5.4-high | 3m 50s | 230,713 | 439,944 | 33 | $0.413511 |
+| modify-jazz-chords-app | openai-gpt-5.4-medium | 2m 31s | 151,348 | 320,430 | 25 | $0.287898 |
+| modify-jazz-chords-app | openai-gpt-5.5-high | 7m 40s | 460,690 | 485,771 | 38 | $1.088018 |
+| modify-jazz-chords-app | openai-gpt-5.5-low | 2m 30s | 150,453 | 324,086 | 29 | $0.560065 |
+| modify-jazz-chords-app | openai-gpt-5.5-medium | 4m 04s | 244,415 | 412,263 | 36 | $0.907562 |
+| nextjs-app | mistral-devstral-2512 | 10m 46s | 646,024 | 1,962,283 | 77 | $0.227189 |
+| nextjs-app | mistral-medium-3-5 | 18m 17s | 1,097,676 | 3,870,884 | 101 | $5.532510 |
+| nextjs-app | moonshot-kimi-k2.6 | 74m 00s | 4,440,289 | 20,583,152 | 235 | $5.508526 |
+| nextjs-app | openai-gpt-5.4-high | 13m 19s | 799,010 | 2,297,831 | 61 | $1.232187 |
+| nextjs-app | openai-gpt-5.4-medium | 11m 42s | 702,982 | 2,109,483 | 74 | $1.086570 |
+| nextjs-app | openai-gpt-5.5-high | 14m 33s | 873,000 | 2,054,374 | 74 | $2.830410 |
+| nextjs-app | openai-gpt-5.5-low | 14m 03s | 843,758 | 2,346,930 | 70 | $2.077880 |
+| nextjs-app | openai-gpt-5.5-medium | 13m 10s | 790,461 | 1,681,697 | 60 | $2.023108 |
+| **All (24)** | | **237m 28s** | **14,248,520** | **44,517,614** | **1,143** | **$30.721942** |
+
+### Per-model totals (across all 3 tasks)
+
+| Model | Duration | Tokens | Tool calls | Cost (USD) |
+|---|---:|---:|---:|---:|
+| mistral-devstral-2512 | 18m 16s | 3,195,999 | 129 | $0.456403 |
+| mistral-medium-3-5 | 30m 17s | 6,787,159 | 173 | $9.792526 |
+| moonshot-kimi-k2.6 | 85m 52s | 20,866,280 | 264 | $5.724302 |
+| openai-gpt-5.4-high | 20m 19s | 2,969,627 | 107 | $1.917709 |
+| openai-gpt-5.4-medium | 16m 18s | 2,555,599 | 110 | $1.560982 |
+| openai-gpt-5.5-high | 25m 54s | 3,025,140 | 136 | $4.607301 |
+| openai-gpt-5.5-low | 21m 20s | 2,849,651 | 115 | $3.291133 |
+| openai-gpt-5.5-medium | 19m 08s | 2,268,159 | 109 | $3.371585 |
+
+> kimi-k2.6's nextjs-app run is a major outlier — 74 min, 20.6M tokens, 235 tool calls — far above
+> every other run. Note also that cost doesn't track tokens: devstral is the cheapest overall
+> ($0.46) despite ~3.2M tokens, while mistral-medium-3-5 is the most expensive ($9.79).

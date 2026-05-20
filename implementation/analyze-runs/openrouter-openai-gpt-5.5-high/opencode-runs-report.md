@@ -8,9 +8,128 @@ Tool token counts are approximate: OpenCode records tokens per step, not per too
 
 | Run | Duration (ms) | Tokens | Cost |
 | --- | ---: | ---: | ---: |
+| analyze-runs/openrouter-mistralai-devstral-2512 | 348,443 | 1,019,395 | $0.164874 |
+| analyze-runs/openrouter-mistralai-mistral-medium-3-5 | 649,939 | 2,755,813 | $3.985142 |
+| analyze-runs/openrouter-moonshotai-kimi-k2.6 | 481,941 | 137,879 | $0.113972 |
+| analyze-runs/openrouter-openai-gpt-5.4-high | 189,467 | 231,852 | $0.272010 |
+| analyze-runs/openrouter-openai-gpt-5.4-medium | 124,194 | 125,686 | $0.186514 |
 | analyze-runs/openrouter-openai-gpt-5.5-high | 220,352 | 484,995 | $0.688873 |
+| analyze-runs/openrouter-openai-gpt-5.5-low | 286,157 | 178,635 | $0.653188 |
+| analyze-runs/openrouter-openai-gpt-5.5-medium | 113,960 | 174,199 | $0.440915 |
+| modify-jazz-chords-app/openrouter-mistralai-devstral-2512 | 102,223 | 214,321 | $0.064341 |
+| modify-jazz-chords-app/openrouter-mistralai-mistral-medium-3-5 | 70,353 | 160,462 | $0.274875 |
+| modify-jazz-chords-app/openrouter-moonshotai-kimi-k2.6 | 230,672 | 145,249 | $0.101804 |
+| modify-jazz-chords-app/openrouter-openai-gpt-5.4-high | 230,713 | 439,944 | $0.413511 |
+| modify-jazz-chords-app/openrouter-openai-gpt-5.4-medium | 151,348 | 320,430 | $0.287898 |
+| modify-jazz-chords-app/openrouter-openai-gpt-5.5-high | 460,690 | 485,771 | $1.088018 |
+| modify-jazz-chords-app/openrouter-openai-gpt-5.5-low | 150,453 | 324,086 | $0.560065 |
+| modify-jazz-chords-app/openrouter-openai-gpt-5.5-medium | 244,415 | 412,263 | $0.907562 |
+| nextjs-app/openrouter-mistralai-devstral-2512 | 646,024 | 1,962,283 | $0.227189 |
+| nextjs-app/openrouter-mistralai-mistral-medium-3-5 | 1,097,676 | 3,870,884 | $5.532510 |
+| nextjs-app/openrouter-moonshotai-kimi-k2.6 | 4,440,289 | 20,583,152 | $5.508526 |
+| nextjs-app/openrouter-openai-gpt-5.4-high | 799,010 | 2,297,831 | $1.232187 |
+| nextjs-app/openrouter-openai-gpt-5.4-medium | 702,982 | 2,109,483 | $1.086570 |
 | nextjs-app/openrouter-openai-gpt-5.5-high | 873,000 | 2,054,374 | $2.830410 |
+| nextjs-app/openrouter-openai-gpt-5.5-low | 843,758 | 2,346,930 | $2.077880 |
 | nextjs-app/openrouter-openai-gpt-5.5-medium | 790,461 | 1,681,697 | $2.023108 |
+
+## analyze-runs/openrouter-mistralai-devstral-2512
+
+- Transcript: `../openrouter-mistralai-devstral-2512/opencode-export.json`
+- Title: Comparing AI coding agent runs with opencode exports
+- Model: `openrouter/mistralai/devstral-2512 (default)`
+- Duration: 348,443 ms (5m 48.443s)
+- Tokens: 1,019,395 total
+- Token details: input 275,752, output 12,667, reasoning 0, cache read 730,976, cache write 0
+- Cost: $0.164874
+- Unassigned step tokens: 41,161 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 12 | 780 | 65 | 221,193 |
+| read | 13 | 346 | 26.6 | 347,756 |
+| grep | 2 | 209 | 104.5 | 37,479 |
+| edit | 11 | 77 | 7 | 298,451 |
+| write | 4 | 66 | 16.5 | 73,355 |
+
+## analyze-runs/openrouter-mistralai-mistral-medium-3-5
+
+- Transcript: `../openrouter-mistralai-mistral-medium-3-5/opencode-export.json`
+- Title: Comparing AI coding agent runs
+- Model: `openrouter/mistralai/mistral-medium-3-5 (default)`
+- Duration: 649,939 ms (10m 49.939s)
+- Tokens: 2,755,813 total
+- Token details: input 2,581,596, output 15,033, reasoning 0, cache read 159,184, cache write 0
+- Cost: $3.985142
+- Unassigned step tokens: 64,762 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 18 | 763 | 42.4 | 851,536.5 |
+| read | 16 | 347 | 21.7 | 721,789 |
+| glob | 2 | 282 | 141 | 10,254.5 |
+| grep | 2 | 150 | 75 | 91,868 |
+| write | 4 | 84 | 21 | 127,174 |
+| edit | 14 | 68 | 4.9 | 740,480 |
+| todowrite | 4 | 22 | 5.5 | 147,949 |
+
+## analyze-runs/openrouter-moonshotai-kimi-k2.6
+
+- Transcript: `../openrouter-moonshotai-kimi-k2.6/opencode-export.json`
+- Title: Comparing AI coding agent runs with opencode-export.json
+- Model: `openrouter/moonshotai/kimi-k2.6 (default)`
+- Duration: 481,941 ms (8m 1.941s)
+- Tokens: 137,879 total
+- Token details: input 107,566, output 3,030, reasoning 5,572, cache read 21,711, cache write 0
+- Cost: $0.113972
+- Unassigned step tokens: 22,625 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 5 | 168 | 33.6 | 56,708 |
+| glob | 1 | 95 | 95 | 9,210 |
+| write | 3 | 47 | 15.7 | 19,986 |
+| read | 2 | 30 | 15 | 16,913.5 |
+| todowrite | 2 | 10 | 5 | 12,436.5 |
+
+## analyze-runs/openrouter-openai-gpt-5.4-high
+
+- Transcript: `../openrouter-openai-gpt-5.4-high/opencode-export.json`
+- Title: Comparing AI coding agent runs with analysis script
+- Model: `openrouter/openai/gpt-5.4 (high)`
+- Duration: 189,467 ms (3m 9.467s)
+- Tokens: 231,852 total
+- Token details: input 23,860, output 5,037, reasoning 5,835, cache read 197,120, cache write 0
+- Cost: $0.272010
+- Unassigned step tokens: 28,546 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 2 | 178 | 89 | 52,155 |
+| read | 5 | 176 | 35.2 | 38,617.5 |
+| glob | 1 | 88 | 88 | 4,483.5 |
+| apply_patch | 2 | 40 | 20 | 51,592 |
+| todowrite | 3 | 28 | 9.3 | 56,458 |
+
+## analyze-runs/openrouter-openai-gpt-5.4-medium
+
+- Transcript: `../openrouter-openai-gpt-5.4-medium/opencode-export.json`
+- Title: Analyzing AI coding agent runs
+- Model: `openrouter/openai/gpt-5.4 (medium)`
+- Duration: 124,194 ms (2m 4.194s)
+- Tokens: 125,686 total
+- Token details: input 22,320, output 4,819, reasoning 2,291, cache read 96,256, cache write 0
+- Cost: $0.186514
+- Unassigned step tokens: 22,912 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| glob | 1 | 214 | 214 | 2,956.7 |
+| bash | 2 | 91 | 45.5 | 21,998.7 |
+| grep | 1 | 75 | 75 | 4,778 |
+| read | 3 | 55 | 18.3 | 17,404.2 |
+| apply_patch | 1 | 35 | 35 | 18,575 |
+| todowrite | 3 | 18 | 6 | 37,061.5 |
 
 ## analyze-runs/openrouter-openai-gpt-5.5-high
 
@@ -32,6 +151,303 @@ Tool token counts are approximate: OpenCode records tokens per step, not per too
 | apply_patch | 2 | 50 | 25 | 59,559 |
 | todowrite | 3 | 20 | 6.7 | 66,584 |
 
+## analyze-runs/openrouter-openai-gpt-5.5-low
+
+- Transcript: `../openrouter-openai-gpt-5.5-low/opencode-export.json`
+- Title: Comparing AI coding agent runs
+- Model: `openrouter/openai/gpt-5.5 (low)`
+- Duration: 286,157 ms (4m 46.157s)
+- Tokens: 178,635 total
+- Token details: input 95,798, output 4,192, reasoning 309, cache read 78,336, cache write 0
+- Cost: $0.653188
+- Unassigned step tokens: 21,779 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| glob | 4 | 456 | 114 | 21,535.7 |
+| read | 5 | 232 | 46.4 | 29,183.3 |
+| grep | 2 | 226 | 113 | 12,219 |
+| bash | 1 | 59 | 59 | 19,151 |
+| apply_patch | 1 | 19 | 19 | 18,496 |
+| todowrite | 3 | 18 | 6 | 56,271 |
+
+## analyze-runs/openrouter-openai-gpt-5.5-medium
+
+- Transcript: `../openrouter-openai-gpt-5.5-medium/opencode-export.json`
+- Title: Comparing AI coding agent runs
+- Model: `openrouter/openai/gpt-5.5 (medium)`
+- Duration: 113,960 ms (1m 53.960s)
+- Tokens: 174,199 total
+- Token details: input 43,383, output 4,359, reasoning 1,017, cache read 125,440, cache write 0
+- Cost: $0.440915
+- Unassigned step tokens: 19,907 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| read | 4 | 157 | 39.3 | 33,714.5 |
+| grep | 1 | 96 | 96 | 11,420 |
+| bash | 2 | 87 | 43.5 | 35,437 |
+| glob | 2 | 87 | 43.5 | 12,861.5 |
+| apply_patch | 1 | 28 | 28 | 16,306 |
+| todowrite | 3 | 17 | 5.7 | 44,553 |
+
+## modify-jazz-chords-app/openrouter-mistralai-devstral-2512
+
+- Transcript: `../../modify-jazz-chords-app/openrouter-mistralai-devstral-2512/opencode-export.json`
+- Title: Named chord configuration storage
+- Model: `openrouter/mistralai/devstral-2512 (default)`
+- Duration: 102,223 ms (1m 42.223s)
+- Tokens: 214,321 total
+- Token details: input 141,958, output 2,379, reasoning 0, cache read 69,984, cache write 0
+- Cost: $0.064341
+- Unassigned step tokens: 29,410 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 1 | 1,954 | 1,954 | 9,716 |
+| read | 6 | 222 | 37 | 119,384 |
+| glob | 2 | 200 | 100 | 26,432 |
+| write | 1 | 15 | 15 | 29,379 |
+
+## modify-jazz-chords-app/openrouter-mistralai-mistral-medium-3-5
+
+- Transcript: `../../modify-jazz-chords-app/openrouter-mistralai-mistral-medium-3-5/opencode-export.json`
+- Title: Save named chord configurations
+- Model: `openrouter/mistralai/mistral-medium-3-5 (default)`
+- Duration: 70,353 ms (1m 10.353s)
+- Tokens: 160,462 total
+- Token details: input 154,765, output 5,697, reasoning 0, cache read 0, cache write 0
+- Cost: $0.274875
+- Unassigned step tokens: 31,419 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 1 | 1,419 | 1,419 | 9,817 |
+| read | 9 | 454 | 50.4 | 78,112 |
+| glob | 1 | 86 | 86 | 9,915 |
+| write | 1 | 23 | 23 | 31,199 |
+
+## modify-jazz-chords-app/openrouter-moonshotai-kimi-k2.6
+
+- Transcript: `../../modify-jazz-chords-app/openrouter-moonshotai-kimi-k2.6/opencode-export.json`
+- Title: Save named chord configurations
+- Model: `openrouter/moonshotai/kimi-k2.6 (default)`
+- Duration: 230,672 ms (3m 50.672s)
+- Tokens: 145,249 total
+- Token details: input 97,852, output 4,520, reasoning 1,197, cache read 41,680, cache write 0
+- Cost: $0.101804
+- Unassigned step tokens: 30,524 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| read | 10 | 270 | 27 | 37,887.7 |
+| glob | 2 | 194 | 97 | 10,306 |
+| skill | 1 | 85 | 85 | 24,696 |
+| bash | 2 | 36 | 18 | 11,609.3 |
+| write | 1 | 13 | 13 | 30,188 |
+
+## modify-jazz-chords-app/openrouter-openai-gpt-5.4-high
+
+- Transcript: `../../modify-jazz-chords-app/openrouter-openai-gpt-5.4-high/opencode-export.json`
+- Title: Save named chord configurations
+- Model: `openrouter/openai/gpt-5.4 (high)`
+- Duration: 230,713 ms (3m 50.713s)
+- Tokens: 439,944 total
+- Token details: input 45,810, output 6,530, reasoning 7,060, cache read 380,544, cache write 0
+- Cost: $0.413511
+- Unassigned step tokens: 50,683 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| read | 21 | 695 | 33.1 | 156,255.3 |
+| glob | 3 | 322 | 107.3 | 8,793 |
+| grep | 2 | 237 | 118.5 | 14,468.7 |
+| skill | 2 | 145 | 72.5 | 16,985 |
+| todowrite | 4 | 27 | 6.8 | 145,982 |
+| apply_patch | 1 | 22 | 22 | 46,777 |
+
+## modify-jazz-chords-app/openrouter-openai-gpt-5.4-medium
+
+- Transcript: `../../modify-jazz-chords-app/openrouter-openai-gpt-5.4-medium/opencode-export.json`
+- Title: Save named chord configurations
+- Model: `openrouter/openai/gpt-5.4 (medium)`
+- Duration: 151,348 ms (2m 31.348s)
+- Tokens: 320,430 total
+- Token details: input 36,144, output 6,112, reasoning 2,462, cache read 275,712, cache write 0
+- Cost: $0.287898
+- Unassigned step tokens: 41,292 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| read | 15 | 549 | 36.6 | 125,392.8 |
+| grep | 3 | 408 | 136 | 19,950.7 |
+| glob | 3 | 285 | 95 | 14,037.5 |
+| bash | 1 | 35 | 35 | 32,138 |
+| apply_patch | 1 | 17 | 17 | 38,133 |
+| todowrite | 2 | 11 | 5.5 | 49,486 |
+
+## modify-jazz-chords-app/openrouter-openai-gpt-5.5-high
+
+- Transcript: `../../modify-jazz-chords-app/openrouter-openai-gpt-5.5-high/opencode-export.json`
+- Title: Save named chord configurations
+- Model: `openrouter/openai/gpt-5.5 (high)`
+- Duration: 460,690 ms (7m 40.690s)
+- Tokens: 485,771 total
+- Token details: input 114,680, output 9,281, reasoning 1,874, cache read 359,936, cache write 0
+- Cost: $1.088018
+- Unassigned step tokens: 41,414 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 4 | 121,864 | 30,466 | 70,229 |
+| read | 21 | 791 | 37.7 | 159,632 |
+| glob | 4 | 489 | 122.3 | 11,700 |
+| grep | 1 | 189 | 189 | 2,990 |
+| skill | 2 | 149 | 74.5 | 28,415 |
+| todowrite | 5 | 32 | 6.4 | 132,639 |
+| apply_patch | 1 | 10 | 10 | 38,752 |
+
+## modify-jazz-chords-app/openrouter-openai-gpt-5.5-low
+
+- Transcript: `../../modify-jazz-chords-app/openrouter-openai-gpt-5.5-low/opencode-export.json`
+- Title: Save named chord configurations
+- Model: `openrouter/openai/gpt-5.5 (low)`
+- Duration: 150,453 ms (2m 30.453s)
+- Tokens: 324,086 total
+- Token details: input 43,275, output 6,701, reasoning 190, cache read 273,920, cache write 0
+- Cost: $0.560065
+- Unassigned step tokens: 34,426 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| read | 17 | 621 | 36.5 | 102,395.3 |
+| glob | 4 | 364 | 91 | 18,236 |
+| skill | 2 | 128 | 64 | 28,887 |
+| grep | 1 | 92 | 92 | 2,872.7 |
+| todowrite | 4 | 21 | 5.3 | 104,167 |
+| apply_patch | 1 | 10 | 10 | 33,102 |
+
+## modify-jazz-chords-app/openrouter-openai-gpt-5.5-medium
+
+- Transcript: `../../modify-jazz-chords-app/openrouter-openai-gpt-5.5-medium/opencode-export.json`
+- Title: Save named chord configurations
+- Model: `openrouter/openai/gpt-5.5 (medium)`
+- Duration: 244,415 ms (4m 4.415s)
+- Tokens: 412,263 total
+- Token details: input 106,792, output 6,976, reasoning 511, cache read 297,984, cache write 0
+- Cost: $0.907562
+- Unassigned step tokens: 36,135 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 2 | 2,060 | 1,030 | 45,091 |
+| read | 18 | 1,014 | 56.3 | 123,442 |
+| glob | 7 | 767 | 109.6 | 18,486 |
+| grep | 1 | 177 | 177 | 6,819 |
+| skill | 2 | 146 | 73 | 30,179 |
+| todowrite | 5 | 23 | 4.6 | 117,755 |
+| apply_patch | 1 | 9 | 9 | 34,356 |
+
+## nextjs-app/openrouter-mistralai-devstral-2512
+
+- Transcript: `../../nextjs-app/openrouter-mistralai-devstral-2512/opencode-export.json`
+- Title: Next.js workspace skeleton setup
+- Model: `openrouter/mistralai/devstral-2512 (default)`
+- Duration: 646,024 ms (10m 46.024s)
+- Tokens: 1,962,283 total
+- Token details: input 358,779, output 9,968, reasoning 0, cache read 1,593,536, cache write 0
+- Cost: $0.227189
+- Unassigned step tokens: 45,521 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 38 | 38,777 | 1,020.4 | 1,116,556 |
+| write | 19 | 261 | 13.7 | 346,211 |
+| todowrite | 13 | 64 | 4.9 | 249,549 |
+| edit | 7 | 34 | 4.9 | 204,446 |
+
+## nextjs-app/openrouter-mistralai-mistral-medium-3-5
+
+- Transcript: `../../nextjs-app/openrouter-mistralai-mistral-medium-3-5/opencode-export.json`
+- Title: Next.js pnpm workspace skeleton setup
+- Model: `openrouter/mistralai/mistral-medium-3-5 (default)`
+- Duration: 1,097,676 ms (18m 17.676s)
+- Tokens: 3,870,884 total
+- Token details: input 3,586,840, output 20,300, reasoning 0, cache read 263,744, cache write 0
+- Cost: $5.532510
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 50 | 16,151 | 323 | 2,174,643 |
+| write | 29 | 351 | 12.1 | 696,686 |
+| read | 8 | 166 | 20.8 | 393,997 |
+| skill | 1 | 83 | 83 | 18,017 |
+| edit | 11 | 54 | 4.9 | 566,142 |
+| todowrite | 2 | 11 | 5.5 | 21,399 |
+
+## nextjs-app/openrouter-moonshotai-kimi-k2.6
+
+- Transcript: `../../nextjs-app/openrouter-moonshotai-kimi-k2.6/opencode-export.json`
+- Title: Next.js pnpm workspace skeleton setup
+- Model: `openrouter/moonshotai/kimi-k2.6 (default)`
+- Duration: 4,440,289 ms (74m 0.289s)
+- Tokens: 20,583,152 total
+- Token details: input 318,661, output 24,745, reasoning 40,002, cache read 20,199,744, cache write 0
+- Cost: $5.508526
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 113 | 42,878 | 379.5 | 10,467,635 |
+| read | 37 | 692 | 18.7 | 3,820,071 |
+| write | 45 | 641 | 14.2 | 1,950,635 |
+| glob | 7 | 507 | 72.4 | 1,036,941 |
+| webfetch | 2 | 419 | 209.5 | 105,455 |
+| skill | 2 | 152 | 76 | 161,247 |
+| edit | 23 | 128 | 5.6 | 2,484,531 |
+| grep | 1 | 73 | 73 | 162,543 |
+| todowrite | 5 | 26 | 5.2 | 393,682 |
+
+## nextjs-app/openrouter-openai-gpt-5.4-high
+
+- Transcript: `../../nextjs-app/openrouter-openai-gpt-5.4-high/opencode-export.json`
+- Title: Next.js workspace skeleton setup
+- Model: `openrouter/openai/gpt-5.4 (high)`
+- Duration: 799,010 ms (13m 19.010s)
+- Tokens: 2,297,831 total
+- Token details: input 82,835, output 12,664, reasoning 19,292, cache read 2,183,040, cache write 0
+- Cost: $1.232187
+- Unassigned step tokens: 94,467 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 23 | 12,508 | 543.8 | 1,027,955.7 |
+| grep | 8 | 4,121 | 515.1 | 250,042 |
+| webfetch | 7 | 1,600 | 228.6 | 68,482.3 |
+| glob | 3 | 355 | 118.3 | 88,780 |
+| read | 9 | 228 | 25.3 | 164,017 |
+| apply_patch | 7 | 214 | 30.6 | 456,322 |
+| todowrite | 4 | 30 | 7.5 | 147,765 |
+
+## nextjs-app/openrouter-openai-gpt-5.4-medium
+
+- Transcript: `../../nextjs-app/openrouter-openai-gpt-5.4-medium/opencode-export.json`
+- Title: Next.js workspace skeleton setup
+- Model: `openrouter/openai/gpt-5.4 (medium)`
+- Duration: 702,982 ms (11m 42.982s)
+- Tokens: 2,109,483 total
+- Token details: input 88,381, output 13,927, reasoning 10,503, cache read 1,996,672, cache write 0
+- Cost: $1.086570
+- Unassigned step tokens: 96,902 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 35 | 10,240 | 292.6 | 875,361.5 |
+| grep | 7 | 4,936 | 705.1 | 200,974 |
+| glob | 6 | 439 | 73.2 | 70,781.5 |
+| apply_patch | 9 | 225 | 25 | 351,058 |
+| read | 11 | 150 | 13.6 | 310,966 |
+| todowrite | 6 | 36 | 6 | 203,440 |
+
 ## nextjs-app/openrouter-openai-gpt-5.5-high
 
 - Transcript: `../../nextjs-app/openrouter-openai-gpt-5.5-high/opencode-export.json`
@@ -51,6 +467,26 @@ Tool token counts are approximate: OpenCode records tokens per step, not per too
 | apply_patch | 8 | 186 | 23.3 | 272,802 |
 | skill | 1 | 82 | 82 | 9,055 |
 | todowrite | 5 | 27 | 5.4 | 124,885 |
+
+## nextjs-app/openrouter-openai-gpt-5.5-low
+
+- Transcript: `../../nextjs-app/openrouter-openai-gpt-5.5-low/opencode-export.json`
+- Title: Next.js pnpm workspace skeleton setup
+- Model: `openrouter/openai/gpt-5.5 (low)`
+- Duration: 843,758 ms (14m 3.758s)
+- Tokens: 2,346,930 total
+- Token details: input 117,188, output 10,557, reasoning 2,225, cache read 2,216,960, cache write 0
+- Cost: $2.077880
+- Unassigned step tokens: 67,371 from steps with no tool calls
+
+| Tool | Calls | Time (ms) | Avg Time (ms) | Approx Tokens |
+| --- | ---: | ---: | ---: | ---: |
+| bash | 33 | 15,860 | 480.6 | 1,132,266 |
+| glob | 5 | 640 | 128 | 118,795 |
+| grep | 6 | 620 | 103.3 | 229,326 |
+| apply_patch | 12 | 279 | 23.3 | 415,718 |
+| read | 8 | 144 | 18 | 242,384 |
+| todowrite | 6 | 32 | 5.3 | 141,070 |
 
 ## nextjs-app/openrouter-openai-gpt-5.5-medium
 
