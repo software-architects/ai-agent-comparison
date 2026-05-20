@@ -43,3 +43,7 @@ Thumbs.db
 
 # Keep opencode session transcripts (part of the comparison data)
 !opencode-export.json
+
+# Cloned jazz-chord-flashcards app source (not a deliverable; reclonable from GitHub).
+# The deliverable plans were moved out into each model folder.
+implementation/modify-jazz-chords-app/*/jazz-chord-flashcards/

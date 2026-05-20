@@ -1,0 +1,6 @@
+# This folder was a clone of jazz-chord-flashcards that the run wrote its
+# deliverables into. Ignore the cloned app source; track only the deliverables.
+/*
+!.gitignore
+!opencode-export.json
+!SAVED_CONFIGURATIONS_PLAN.md
