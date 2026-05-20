@@ -1,14 +1,14 @@
 # ai-comparison
 
-A workspace for comparing how different AI coding agents implement the same requirements. Each model gets its own folder under `implementation\<name>\`, generated non-interactively by `opencode` from the requirements in `prompts\requirements-simple.md`.
+A workspace for comparing how different AI coding agents implement the same requirements. Each run gets a folder under `implementation\<prompt>\<name>\`, generated non-interactively by `opencode` from a prompt doc in `prompts\` (e.g. `prompts\nextjs-app.md`).
 
 ## Repo layout
 
 ```
-prompts\          The requirements docs handed to each model
-implementation\   One folder per model run, containing the model's output
+prompts\          The prompt docs handed to each model (one .md per prompt)
+implementation\   Output, grouped as <prompt>\<model> per run
 scripts\          Automation
-  run-opencode.ps1
+  execute-prompt.ps1
 ```
 
 ## Prerequisites
@@ -17,9 +17,9 @@ scripts\          Automation
 - **opencode CLI** on `PATH` (https://opencode.ai). The script auto-discovers the underlying `.exe` even if `Get-Command` resolves to a `.ps1` or `.cmd` shim
 - Whatever providers `opencode` is configured against (OpenRouter, direct Anthropic/OpenAI keys, etc.) — list yours with `opencode models`
 
-## `scripts\run-opencode.ps1`
+## `scripts\execute-prompt.ps1`
 
-Runs `opencode` non-interactively against `prompts\requirements-simple.md` inside a per-model folder, hard-caps spend at a EUR budget by streaming the JSON event log and killing the process when the cap is hit, then exports the full session transcript as JSON.
+Runs `opencode` non-interactively against a prompt doc in `prompts\` inside a per-model folder, hard-caps spend at a EUR budget by streaming the JSON event log and killing the process when the cap is hit, then exports the full session transcript as JSON. The prompt file is chosen with `-Prompt`, which also names the `implementation\<prompt>\` group the output lands in.
 
 ### Quick start
 
@@ -27,38 +27,40 @@ Runs `opencode` non-interactively against `prompts\requirements-simple.md` insid
 cd C:\Users\KarinHuber\source\repos\ai-comparison
 
 # Pick a small/cheap model and a tiny cap to verify the kill path
-.\scripts\run-opencode.ps1 `
+.\scripts\execute-prompt.ps1 `
     -Model openrouter/anthropic/claude-haiku-4.5 `
+    -Prompt nextjs-app `
     -MaxCostEur 0.05 `
     -FolderName _test-cost-kill
 
 # Real run for the comparison
-.\scripts\run-opencode.ps1 -Model openrouter/openai/gpt-5.5            -FolderName gpt-5.5
-.\scripts\run-opencode.ps1 -Model openrouter/anthropic/claude-opus-4.7 -FolderName claude-opus-4.7
+.\scripts\execute-prompt.ps1 -Model openrouter/openai/gpt-5.5            -Prompt nextjs-app
+.\scripts\execute-prompt.ps1 -Model openrouter/anthropic/claude-opus-4.7 -Prompt nextjs-app
 
 # Crank up the model's reasoning effort (provider-specific values)
-.\scripts\run-opencode.ps1 `
+.\scripts\execute-prompt.ps1 `
     -Model openrouter/anthropic/claude-opus-4.7 `
+    -Prompt nextjs-app `
     -ReasoningEffort high `
     -FolderName claude-opus-4.7-high
 ```
 
 ### Parameters
 
-| Parameter | Type | Default | Purpose |
-|---|---|---|---|
-| `-Model` *(required)* | string | — | The full opencode model spec, e.g. `openrouter/openai/gpt-5.5`. Passed verbatim to `opencode run --model`. Find valid values with `opencode models`. |
-| `-FolderName` | string | derived from `-Model` (`/` → `-`) | Sub-folder under `implementation\` to create. Override to keep short names like `gpt-5.5` instead of `openrouter-openai-gpt-5.5`. |
-| `-MaxCostEur` | double | `5` | Hard cap. The opencode process is killed the moment cumulative spend reaches this many EUR. |
-| `-UsdPerEur` | double | `1.10` | USD→EUR conversion factor. opencode reports cost in USD; we convert for the cap. Adjust when the rate drifts noticeably. |
-| `-PromptPath` | string | `prompts\requirements-simple.md` | Path (absolute or relative to repo root) of the requirements file passed as the prompt. |
-| `-ReasoningEffort` *(alias `-Variant`)* | string | *(unset)* | Forwarded to `opencode run --variant`. Selects a provider-specific reasoning-effort variant of the model. See [Reasoning effort](#reasoning-effort--variant) below. |
-| `-Force` | switch | off | Required to re-run into a non-empty existing folder. Without it, the script refuses to overwrite. |
+| Parameter                               | Type   | Default                           | Purpose                                                                                                                                                                                        |
+| --------------------------------------- | ------ | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-Model` _(required)_                   | string | —                                 | The full opencode model spec, e.g. `openrouter/openai/gpt-5.5`. Passed verbatim to `opencode run --model`. Find valid values with `opencode models`.                                           |
+| `-Prompt` _(required)_                  | string | —                                 | Base name of the prompt doc in `prompts\`, e.g. `nextjs-app` for `prompts\nextjs-app.md` (a trailing `.md` is tolerated). Also names the `implementation\<prompt>\` group the output lands in. |
+| `-FolderName`                           | string | derived from `-Model` (`/` → `-`) | Sub-folder under `implementation\<prompt>\` to create. Override to keep short names like `gpt-5.5` instead of `openrouter-openai-gpt-5.5`.                                                     |
+| `-MaxCostEur`                           | double | `5`                               | Hard cap. The opencode process is killed the moment cumulative spend reaches this many EUR.                                                                                                    |
+| `-UsdPerEur`                            | double | `1.10`                            | USD→EUR conversion factor. opencode reports cost in USD; we convert for the cap. Adjust when the rate drifts noticeably.                                                                       |
+| `-ReasoningEffort` _(alias `-Variant`)_ | string | _(unset)_                         | Forwarded to `opencode run --variant`. Selects a provider-specific reasoning-effort variant of the model. See [Reasoning effort](#reasoning-effort--variant) below.                            |
+| `-Force`                                | switch | off                               | Required to re-run into a non-empty existing folder. Without it, the script refuses to overwrite.                                                                                              |
 
 ### What it produces
 
 ```
-implementation\<FolderName>\
+implementation\<Prompt>\<FolderName>\
   ...                          everything opencode scaffolded
   opencode-export.json         full session transcript (messages, tool calls, costs)
 ```
@@ -77,21 +79,21 @@ Caveats:
 
 When `-ReasoningEffort` (alias `-Variant`) is supplied, the script appends `--variant <value>` to the underlying `opencode run` call. From `opencode run --help`:
 
-> `--variant`  model variant (provider-specific reasoning effort, e.g., **high**, **max**, **minimal**)
+> `--variant` model variant (provider-specific reasoning effort, e.g., **high**, **max**, **minimal**)
 
 Accepted values are **provider-specific** — opencode forwards the string to the provider as-is, so the model itself decides what's valid. Common values in practice:
 
-| Provider                              | Typical values                              |
-|---------------------------------------|---------------------------------------------|
-| Anthropic (Claude extended thinking)  | `minimal`, `low`, `medium`, `high`, `max`   |
-| OpenAI (o-series / GPT-5 reasoning)   | `minimal`, `low`, `medium`, `high`          |
-| Google (Gemini thinking)              | `low`, `medium`, `high`                     |
+| Provider                             | Typical values                            |
+| ------------------------------------ | ----------------------------------------- |
+| Anthropic (Claude extended thinking) | `minimal`, `low`, `medium`, `high`, `max` |
+| OpenAI (o-series / GPT-5 reasoning)  | `minimal`, `low`, `medium`, `high`        |
+| Google (Gemini thinking)             | `low`, `medium`, `high`                   |
 
 If the provider rejects the value you pass, opencode surfaces the upstream error — run again with `--print-logs` (or check `opencode-export.json`) for the full message. Omit `-ReasoningEffort` entirely to let opencode use the model's default.
 
 ### Finding the right `-Model` value
 
-opencode addresses models as `provider/model`. The provider prefix depends on how *your* opencode is configured. For an OpenRouter-based install, models look like `openrouter/anthropic/claude-opus-4.7`. List everything yours knows about:
+opencode addresses models as `provider/model`. The provider prefix depends on how _your_ opencode is configured. For an OpenRouter-based install, models look like `openrouter/anthropic/claude-opus-4.7`. List everything yours knows about:
 
 ```powershell
 opencode models
@@ -103,24 +105,25 @@ If you pass a model opencode can't resolve, it prints an `UnknownError` with a "
 
 ### Exit codes
 
-| Code | Meaning |
-|---|---|
-| `0` | Clean completion, or killed for cost (still considered success) |
-| `0` | Run produced no session ID (something failed before the first event) — script warns and exits 0 |
-| non-zero | `opencode run` itself exited non-zero for a non-cost reason |
+| Code     | Meaning                                                                                         |
+| -------- | ----------------------------------------------------------------------------------------------- |
+| `0`      | Clean completion, or killed for cost (still considered success)                                 |
+| `0`      | Run produced no session ID (something failed before the first event) — script warns and exits 0 |
+| non-zero | `opencode run` itself exited non-zero for a non-cost reason                                     |
 
 ## Troubleshooting
 
 **`'pwsh' is not recognized`**
-The script no longer requires `pwsh`. Use plain `powershell` or just `.\scripts\run-opencode.ps1`.
+The script no longer requires `pwsh`. Use plain `powershell` or just `.\scripts\execute-prompt.ps1`.
 
-**`'.\scripts\run-opencode.ps1' is not recognized`**
+**`'.\scripts\execute-prompt.ps1' is not recognized`**
 Your shell isn't in the repo root. Either `cd C:\Users\KarinHuber\source\repos\ai-comparison` first or invoke with an absolute path.
 
 **`...cannot be loaded because running scripts is disabled on this system`**
 Execution policy is blocking. Either set policy once with `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`, or bypass per-run:
+
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\run-opencode.ps1 -Model openrouter/openai/gpt-5.5
+powershell -ExecutionPolicy Bypass -File .\scripts\execute-prompt.ps1 -Model openrouter/openai/gpt-5.5 -Prompt nextjs-app
 ```
 
 **`The specified executable is not a valid application for this OS platform`**

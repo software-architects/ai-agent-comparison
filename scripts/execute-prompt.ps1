@@ -1,28 +1,29 @@
 #Requires -Version 5.1
 <#
 .SYNOPSIS
-    Run opencode non-interactively against prompts\requirements-simple.md inside
-    a per-model folder under implementation\, hard-capped by a EUR cost limit,
-    then export the session transcript as opencode-export.json.
+    Run opencode non-interactively against a prompt file in prompts\ inside
+    a per-model folder under implementation\<prompt>\, hard-capped by a EUR
+    cost limit, then export the session transcript as opencode-export.json.
 
 .EXAMPLE
-    .\scripts\run-opencode.ps1 -Model anthropic/claude-opus-4-7
-    .\scripts\run-opencode.ps1 -Model openai/gpt-5.5 -MaxCostEur 3
-    .\scripts\run-opencode.ps1 -Model mistral/medium-3.5 -FolderName mistral-medium-3.5 -Force
-    .\scripts\run-opencode.ps1 -Model anthropic/claude-opus-4-7 -ReasoningEffort high
+    .\scripts\execute-prompt.ps1 -Model anthropic/claude-opus-4-7 -Prompt nextjs-app
+    .\scripts\execute-prompt.ps1 -Model openai/gpt-5.5 -Prompt nextjs-app -MaxCostEur 3
+    .\scripts\execute-prompt.ps1 -Model mistral/medium-3.5 -Prompt nextjs-app -FolderName mistral-medium-3.5 -Force
+    .\scripts\execute-prompt.ps1 -Model anthropic/claude-opus-4-7 -Prompt nextjs-app -ReasoningEffort high
 #>
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
     [string]$Model,
 
+    [Parameter(Mandatory = $true)]
+    [string]$Prompt,
+
     [string]$FolderName,
 
     [double]$MaxCostEur = 5,
 
     [double]$UsdPerEur = 1.10,
-
-    [string]$PromptPath = 'prompts\requirements-simple.md',
 
     [Alias('Variant')]
     [string]$ReasoningEffort,
@@ -149,11 +150,8 @@ $opencodePath = Resolve-OpencodePath
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 
-$promptFullPath = if ([System.IO.Path]::IsPathRooted($PromptPath)) {
-    $PromptPath
-} else {
-    Join-Path $repoRoot $PromptPath
-}
+$Prompt = $Prompt -replace '\.md$', ''   # tolerate a passed-in .md
+$promptFullPath = Join-Path $repoRoot "prompts\$Prompt.md"
 if (-not (Test-Path -LiteralPath $promptFullPath -PathType Leaf)) {
     throw "Prompt file not found: $promptFullPath"
 }
@@ -163,8 +161,11 @@ if (-not $FolderName) {
     $FolderName = $Model -replace '/', '-'
     $FolderName = $FolderName -replace '[\\:*?"<>|]', '_'
 }
+if ($ReasoningEffort) {
+    $FolderName = "$FolderName-$ReasoningEffort"
+}
 
-$targetDir = Join-Path $repoRoot "implementation\$FolderName"
+$targetDir = Join-Path $repoRoot "implementation\$Prompt\$FolderName"
 if (Test-Path -LiteralPath $targetDir) {
     $existing = Get-ChildItem -LiteralPath $targetDir -Force -ErrorAction SilentlyContinue
     if ($existing -and -not $Force) {
