@@ -1,0 +1,12 @@
+{
+  "name": "analyze-runs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "analyze": "tsx analyze.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@skeleton/lib",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/math.ts",
+    "./math": "./src/math.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  }
+}

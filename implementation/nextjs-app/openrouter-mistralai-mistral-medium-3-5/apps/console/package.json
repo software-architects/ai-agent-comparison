@@ -1,0 +1,25 @@
+{
+  "name": "@ai-agent/console",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint",
+    "format": "biome format --write"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.15",
+    "typescript": "^5.6.3",
+    "tsx": "^4.19.1"
+  },
+  "dependencies": {
+    "@ai-agent/lib": "workspace:*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

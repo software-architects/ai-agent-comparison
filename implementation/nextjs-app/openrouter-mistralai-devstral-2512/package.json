@@ -1,0 +1,26 @@
+{
+  "name": "ai-agent-comparison",
+  "version": "1.0.0",
+  "description": "A Next.js application skeleton with shared logic and UI",
+  "private": true,
+  "scripts": {
+    "lint": "biome lint .",
+    "format": "biome format .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "e2e": "playwright test",
+    "dev": "next dev"
+  },
+  "devDependencies": {
+    "@vitest/ui": "latest",
+    "biome": "latest",
+    "jsdom": "latest",
+    "playwright": "latest",
+    "typescript": "latest",
+    "vitest": "latest"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.60.0",
+    "@testing-library/react": "^16.3.2"
+  }
+}

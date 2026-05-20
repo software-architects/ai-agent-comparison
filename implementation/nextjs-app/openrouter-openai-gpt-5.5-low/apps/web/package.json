@@ -1,0 +1,20 @@
+{
+  "name": "@skeleton/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev --turbopack",
+    "e2e": "playwright test",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@skeleton/lib": "workspace:*",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}

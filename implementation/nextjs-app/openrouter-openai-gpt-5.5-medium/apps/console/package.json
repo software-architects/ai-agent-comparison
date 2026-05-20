@@ -1,0 +1,15 @@
+{
+  "name": "@workspace/console",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "start": "tsx src/index.ts",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@workspace/lib": "workspace:*"
+  },
+  "devDependencies": {}
+}

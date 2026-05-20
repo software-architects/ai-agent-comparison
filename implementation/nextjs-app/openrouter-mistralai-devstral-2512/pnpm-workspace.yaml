@@ -1,0 +1,6 @@
+packages:
+  - 'packages/*'
+  - 'apps/*'
+allowBuilds:
+  core-js: set this to true or false
+  sharp: set this to true or false

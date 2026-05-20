@@ -1,0 +1,32 @@
+{
+  "name": "nextjs-application-skeleton",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "dev": "pnpm --filter @skeleton/web dev",
+    "build": "pnpm --recursive build",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "typecheck": "pnpm --recursive typecheck",
+    "test": "pnpm --recursive test",
+    "e2e": "pnpm --filter @skeleton/web e2e",
+    "console": "pnpm --filter @skeleton/console start"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "latest",
+    "@playwright/test": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "latest",
+    "@vitest/browser": "latest",
+    "@vitest/browser-playwright": "^4.1.7",
+    "jsdom": "latest",
+    "playwright": "latest",
+    "typescript": "latest",
+    "vite": "latest",
+    "vitest": "latest",
+    "vitest-browser-react": "latest"
+  }
+}

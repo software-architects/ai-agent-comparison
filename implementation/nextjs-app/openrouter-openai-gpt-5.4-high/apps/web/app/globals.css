@@ -1,0 +1,158 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  background: #f4f6fb;
+  color: #101828;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(96, 165, 250, 0.18), transparent 36%),
+    linear-gradient(180deg, #f8fbff 0%, #eef2ff 100%);
+}
+
+main {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+.visualizer-shell {
+  width: min(100%, 720px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+  padding: 1.5rem;
+  backdrop-filter: blur(16px);
+}
+
+.visualizer-title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+}
+
+.visualizer-copy {
+  margin: 0.75rem 0 0;
+  color: #475467;
+  font-size: 1rem;
+}
+
+.visualizer-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.field-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.field-card,
+.result-card {
+  border-radius: 22px;
+  padding: 1rem;
+}
+
+.field-card {
+  background: #f8fafc;
+  border: 1px solid #d0d5dd;
+}
+
+.field-label,
+.panel-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.field-input {
+  width: 100%;
+  border: 1px solid #d0d5dd;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  font-size: 1.125rem;
+  background: #ffffff;
+}
+
+.field-input:focus {
+  outline: 2px solid #7c3aed;
+  outline-offset: 2px;
+}
+
+.results-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.result-card {
+  background: linear-gradient(135deg, #101828 0%, #312e81 100%);
+  color: #ffffff;
+}
+
+.result-value {
+  margin: 0;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+}
+
+.panel-row {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.panel-card {
+  border: 1px solid #d0d5dd;
+  border-radius: 18px;
+  background: #ffffff;
+  padding: 1rem;
+}
+
+.panel-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.dot-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  min-height: 1.5rem;
+  margin-top: 0.75rem;
+}
+
+.dot {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #22c55e 0%, #14b8a6 100%);
+}
+
+.dot-empty {
+  color: #667085;
+  font-size: 0.95rem;
+}
+
+@media (min-width: 720px) {
+  .field-grid,
+  .results-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .panel-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .result-card {
+    grid-column: 1 / -1;
+  }
+}

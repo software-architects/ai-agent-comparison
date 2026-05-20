@@ -1,0 +1,2513 @@
+{
+  "info": {
+    "id": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+    "slug": "brave-nebula",
+    "projectID": "3de8d561997ee131183d1c77b6c61d8c1580ea12",
+    "directory": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+    "path": "implementation/analyze-runs/openrouter-openai-gpt-5.5-low",
+    "title": "Comparing AI coding agent runs",
+    "agent": "build",
+    "model": {
+      "id": "openai/gpt-5.5",
+      "providerID": "openrouter",
+      "variant": "low"
+    },
+    "version": "1.15.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0.653188,
+    "tokens": {
+      "input": 95798,
+      "output": 4192,
+      "reasoning": 309,
+      "cache": {
+        "read": 78336,
+        "write": 0
+      }
+    },
+    "permission": [
+      {
+        "permission": "question",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "plan_enter",
+        "pattern": "*",
+        "action": "deny"
+      },
+      {
+        "permission": "plan_exit",
+        "pattern": "*",
+        "action": "deny"
+      }
+    ],
+    "time": {
+      "created": 1779268786120,
+      "updated": 1779269072277
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1779268786202
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "openrouter",
+          "modelID": "openai/gpt-5.5",
+          "variant": "low"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_e44af181a001kN97J4PttQGFm9",
+        "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "\"# Analyze opencode runs\n\nI'm comparing how different AI coding agents implement the same prompt. Each run leaves an `opencode-export.json` transcript somewhere under `implementation/`. I'd like a script that reads all of them and produces one report comparing the runs.\n\nPlease write it in TypeScript and run it with `tsx`. Keep it simple â€” just the Node standard library. Put `analyze.ts`, `package.json` and `tsconfig.json` in the current folder and don't touch anything else in the repo.\n\nThe script should find every `opencode-export.json` under `implementation/`, ignoring `node_modules`. The repo root is the first parent folder that contains an `implementation/` directory â€” the script may be nested a few levels deep, so don't hardcode the path.\n\nFor each transcript, work out:\n\n- the total duration (`info.time.updated - info.time.created`, in ms) and total tokens (`info.tokens`), and\n- a per-tool breakdown of time and tokens.\n\nEach tool call is a part with `type: \\\"tool\\\"` in `messages[].parts[]`, and its duration is `state.time.end - state.time.start`. Tokens aren't recorded per tool though â€” they're per step (`step-finish` parts carry `tokens.total`), so just split each step's tokens evenly across the tool calls in that step and mention in the report that it's an approximation.\n\nWrite a single Markdown report in the script's own folder that compares all the runs, with one section per implementation subfolder â€” a summary table up top (duration, tokens, cost per run), then the per-tool details for each. Don't write anything into the folders you're analyzing. Print a short summary to the console too.\n\nAfter creating the script also run it.\n\"",
+          "id": "prt_e44af1823001P092DRNU4spzEo",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af181a001kN97J4PttQGFm9"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_e44af181a001kN97J4PttQGFm9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "low",
+        "path": {
+          "cwd": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+          "root": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison"
+        },
+        "cost": 0.046835,
+        "tokens": {
+          "total": 8547,
+          "input": 8383,
+          "output": 164,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "openai/gpt-5.5",
+        "providerID": "openrouter",
+        "time": {
+          "created": 1779268786381,
+          "completed": 1779268804339
+        },
+        "finish": "tool-calls",
+        "id": "msg_e44af18cd001qGdVUYuyn2erfh",
+        "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H"
+      },
+      "parts": [
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44af20bd001bFWEAumN6PWipl",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af18cd001qGdVUYuyn2erfh"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44af2f0e001sJIC0om2ovQZqx",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af18cd001qGdVUYuyn2erfh"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44af50ca001lCdm6t161YNdjW",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af18cd001qGdVUYuyn2erfh"
+        },
+        {
+          "type": "text",
+          "text": "I’ll create a minimal TypeScript analyzer in the current folder only, then run it with `tsx` and verify the generated report. First I’ll inspect the local folder and transcript shape so the parser matches the exported JSON.",
+          "time": {
+            "start": 1779268800719,
+            "end": 1779268803320
+          },
+          "id": "prt_e44af50cf001x4ZRDaIEaCmUof",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af18cd001qGdVUYuyn2erfh"
+        },
+        {
+          "type": "tool",
+          "tool": "glob",
+          "callID": "call_ZGp7eKcf8gWiysr3brj7ups8",
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "**/opencode-export.json",
+              "path": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation"
+            },
+            "output": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-mistralai-mistral-medium-3-5\\opencode-export.json\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-moonshotai-kimi-k2.6\\opencode-export.json\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-high\\opencode-export.json\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\nextjs-app\\openrouter-openai-gpt-5.5-medium\\opencode-export.json\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\nextjs-app\\openrouter-openai-gpt-5.5-high\\opencode-export.json",
+            "metadata": {
+              "count": 6,
+              "truncated": false
+            },
+            "title": "implementation",
+            "time": {
+              "start": 1779268803305,
+              "end": 1779268803413
+            }
+          },
+          "metadata": {
+            "openrouter": {
+              "reasoning_details": []
+            }
+          },
+          "id": "prt_e44af5adc001rZzUvOwFXtoKpA",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af18cd001qGdVUYuyn2erfh"
+        },
+        {
+          "type": "tool",
+          "tool": "glob",
+          "callID": "call_SjhV0NAJc63on1ju6hy7fzT5",
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "*",
+              "path": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low"
+            },
+            "output": "No files found",
+            "metadata": {
+              "count": 0,
+              "truncated": false
+            },
+            "title": "implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+            "time": {
+              "start": 1779268803317,
+              "end": 1779268803433
+            }
+          },
+          "id": "prt_e44af5aed001tr3tSzyfnPqzRB",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af18cd001qGdVUYuyn2erfh"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8547,
+            "input": 8383,
+            "output": 164,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0.046835,
+          "id": "prt_e44af5d3f001HQe5CPQnRWyGbe",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af18cd001qGdVUYuyn2erfh"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_e44af181a001kN97J4PttQGFm9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "low",
+        "path": {
+          "cwd": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+          "root": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison"
+        },
+        "cost": 0.011616,
+        "tokens": {
+          "total": 8966,
+          "input": 628,
+          "output": 146,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 8192
+          }
+        },
+        "modelID": "openai/gpt-5.5",
+        "providerID": "openrouter",
+        "time": {
+          "created": 1779268804345,
+          "completed": 1779268809758
+        },
+        "finish": "tool-calls",
+        "id": "msg_e44af5ef9001jdzieGHeX4Kc1V",
+        "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H"
+      },
+      "parts": [
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44af6f6a001hz3ImEL7SnoAsk",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af5ef9001jdzieGHeX4Kc1V"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_MUvWnJnmMv0HEz2NJTybC0bc",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json",
+              "offset": 1,
+              "limit": 120
+            },
+            "output": "<path>C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"info\": {\n3:     \"id\": \"ses_1bb6c5302ffen1vVd4stedxp6v\",\n4:     \"slug\": \"proud-river\",\n5:     \"projectID\": \"3de8d561997ee131183d1c77b6c61d8c1580ea12\",\n6:     \"directory\": \"C:\\\\Users\\\\KarinHuber\\\\source\\\\repos\\\\ai-agent-comparison\\\\implementation\\\\analyze-runs\\\\openrouter-openai-gpt-5.5-medium\",\n7:     \"path\": \"implementation/analyze-runs/openrouter-openai-gpt-5.5-medium\",\n8:     \"title\": \"Comparing AI coding agent runs\",\n9:     \"agent\": \"build\",\n10:     \"model\": {\n11:       \"id\": \"openai/gpt-5.5\",\n12:       \"providerID\": \"openrouter\",\n13:       \"variant\": \"medium\"\n14:     },\n15:     \"version\": \"1.15.5\",\n16:     \"summary\": {\n17:       \"additions\": 0,\n18:       \"deletions\": 0,\n19:       \"files\": 0\n20:     },\n21:     \"cost\": 0.440915,\n22:     \"tokens\": {\n23:       \"input\": 43383,\n24:       \"output\": 4359,\n25:       \"reasoning\": 1017,\n26:       \"cache\": {\n27:         \"read\": 125440,\n28:         \"write\": 0\n29:       }\n30:     },\n31:     \"permission\": [\n32:       {\n33:         \"permission\": \"question\",\n34:         \"pattern\": \"*\",\n35:         \"action\": \"deny\"\n36:       },\n37:       {\n38:         \"permission\": \"plan_enter\",\n39:         \"pattern\": \"*\",\n40:         \"action\": \"deny\"\n41:       },\n42:       {\n43:         \"permission\": \"plan_exit\",\n44:         \"pattern\": \"*\",\n45:         \"action\": \"deny\"\n46:       }\n47:     ],\n48:     \"time\": {\n49:       \"created\": 1779266989309,\n50:       \"updated\": 1779267103269\n51:     }\n52:   },\n53:   \"messages\": [\n54:     {\n55:       \"info\": {\n56:         \"role\": \"user\",\n57:         \"time\": {\n58:           \"created\": 1779266989384\n59:         },\n60:         \"agent\": \"build\",\n61:         \"model\": {\n62:           \"providerID\": \"openrouter\",\n63:           \"modelID\": \"openai/gpt-5.5\",\n64:           \"variant\": \"medium\"\n65:         },\n66:         \"summary\": {\n67:           \"diffs\": []\n68:         },\n69:         \"id\": \"msg_e4493ad480012Thg3Q1KgNtJmK\",\n70:         \"sessionID\": \"ses_1bb6c5302ffen1vVd4stedxp6v\"\n71:       },\n72:       \"parts\": [\n73:         {\n74:           \"type\": \"text\",\n75:           \"text\": \"\\\"# Analyze opencode runs\\n\\nI'm comparing how different AI coding agents implement the same prompt. Each run leaves an `opencode-export.json` transcript somewhere under `implementation/`. I'd like a script that reads all of them and produces one report comparing the runs.\\n\\nPlease write it in TypeScript and run it with `tsx`. Keep it simple â€” just the Node standard library. Put `analyze.ts`, `package.json` and `tsconfig.json` in the current folder and don't touch anything else in the repo.\\n\\nThe script should find every `opencode-export.json` under `implementation/`, ignoring `node_modules`. The repo root is the first parent folder that contains an `implementation/` directory â€” the script may be nested a few levels deep, so don't hardcode the path.\\n\\nFor each transcript, work out:\\n\\n- the total duration (`info.time.updated - info.time.created`, in ms) and total tokens (`info.tokens`), and\\n- a per-tool breakdown of time and tokens.\\n\\nEach tool call is a part with `type: \\\\\\\"tool\\\\\\\"` in `messages[].parts[]`, and its duration is `state.time.end - state.time.start`. Tokens aren't recorded per tool though â€” they're per step (`step-finish` parts carry `tokens.total`), so just split each step's tokens evenly across the tool calls in that step and mention in the report that it's an approximation.\\n\\nWrite a single Markdown report in the script's own folder that compares all the runs, with one section per implementation subfolder â€” a summary table up top (duration, tokens, cost per run), then the per-tool details for each. Don't write anything into the folders you're analyzing. Print a short summary to the console too.\\n\\\"\",\n76:           \"id\": \"prt_e4493ad50001FKeX0tzlyzvRF6\",\n77:           \"sessionID\": \"ses_1bb6c5302ffen1vVd4stedxp6v\",\n78:           \"messageID\": \"msg_e4493ad480012Thg3Q1KgNtJmK\"\n79:         }\n80:       ]\n81:     },\n82:     {\n83:       \"info\": {\n84:         \"parentID\": \"msg_e4493ad480012Thg3Q1KgNtJmK\",\n85:         \"role\": \"assistant\",\n86:         \"mode\": \"build\",\n87:         \"agent\": \"build\",\n88:         \"variant\": \"medium\",\n89:         \"path\": {\n90:           \"cwd\": \"C:\\\\Users\\\\KarinHuber\\\\source\\\\repos\\\\ai-agent-comparison\\\\implementation\\\\analyze-runs\\\\openrouter-openai-gpt-5.5-medium\",\n91:           \"root\": \"C:\\\\Users\\\\KarinHuber\\\\source\\\\repos\\\\ai-agent-comparison\"\n92:         },\n93:         \"cost\": 0.045495,\n94:         \"tokens\": {\n95:           \"total\": 8494,\n96:           \"input\": 8373,\n97:           \"output\": 121,\n98:           \"reasoning\": 0,\n99:           \"cache\": {\n100:             \"write\": 0,\n101:             \"read\": 0\n102:           }\n103:         },\n104:         \"modelID\": \"openai/gpt-5.5\",\n105:         \"providerID\": \"openrouter\",\n106:         \"time\": {\n107:           \"created\": 1779266989561,\n108:           \"completed\": 1779266994002\n109:         },\n110:         \"finish\": \"tool-calls\",\n111:         \"id\": \"msg_e4493adf9001iyYfxcyNBtMwtZ\",\n112:         \"sessionID\": \"ses_1bb6c5302ffen1vVd4stedxp6v\"\n113:       },\n114:       \"parts\": [\n115:         {\n116:           \"snapshot\": \"4b825dc642cb6eb9a060e54bf8d69288fbee4904\",\n117:           \"type\": \"step-start\",\n118:           \"id\": \"prt_e4493b4b2001S3samnx7Qq4VWf\",\n119:           \"sessionID\": \"ses_1bb6c5302ffen1vVd4stedxp6v\",\n120:           \"messageID\": \"msg_e4493adf9001iyYfxcyNBtMwtZ\"\n\n(Showing lines 1-120 of 7618. Use offset=121 to continue.)\n</content>",
+            "metadata": {
+              "preview": "{\n  \"info\": {\n    \"id\": \"ses_1bb6c5302ffen1vVd4stedxp6v\",\n    \"slug\": \"proud-river\",\n    \"projectID\": \"3de8d561997ee131183d1c77b6c61d8c1580ea12\",\n    \"directory\": \"C:\\\\Users\\\\KarinHuber\\\\source\\\\repos\\\\ai-agent-comparison\\\\implementation\\\\analyze-runs\\\\openrouter-openai-gpt-5.5-medium\",\n    \"path\": \"implementation/analyze-runs/openrouter-openai-gpt-5.5-medium\",\n    \"title\": \"Comparing AI coding agent runs\",\n    \"agent\": \"build\",\n    \"model\": {\n      \"id\": \"openai/gpt-5.5\",\n      \"providerID\": \"openrouter\",\n      \"variant\": \"medium\"\n    },\n    \"version\": \"1.15.5\",\n    \"summary\": {\n      \"additions\": 0,\n      \"deletions\": 0,\n      \"files\": 0\n    },",
+              "truncated": true,
+              "loaded": []
+            },
+            "title": "implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json",
+            "time": {
+              "start": 1779268808566,
+              "end": 1779268808604
+            }
+          },
+          "metadata": {
+            "openrouter": {
+              "reasoning_details": []
+            }
+          },
+          "id": "prt_e44af6f6d0013pF7GgJdyNl6xn",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af5ef9001jdzieGHeX4Kc1V"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_vRwiQSyrefl30miNq3pCQZTB",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-mistralai-mistral-medium-3-5\\opencode-export.json",
+              "offset": 1,
+              "limit": 80
+            },
+            "output": "<path>C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-mistralai-mistral-medium-3-5\\opencode-export.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"info\": {\n3:     \"id\": \"ses_1bb5c6af5ffee12J6XhK7wsvGs\",\n4:     \"slug\": \"tidy-river\",\n5:     \"projectID\": \"3de8d561997ee131183d1c77b6c61d8c1580ea12\",\n6:     \"directory\": \"C:\\\\Users\\\\KarinHuber\\\\source\\\\repos\\\\ai-agent-comparison\\\\implementation\\\\analyze-runs\\\\openrouter-mistralai-mistral-medium-3-5\",\n7:     \"path\": \"implementation/analyze-runs/openrouter-mistralai-mistral-medium-3-5\",\n8:     \"title\": \"Comparing AI coding agent runs\",\n9:     \"agent\": \"build\",\n10:     \"model\": {\n11:       \"id\": \"mistralai/mistral-medium-3-5\",\n12:       \"providerID\": \"openrouter\",\n13:       \"variant\": \"default\"\n14:     },\n15:     \"version\": \"1.15.5\",\n16:     \"summary\": {\n17:       \"additions\": 0,\n18:       \"deletions\": 0,\n19:       \"files\": 0\n20:     },\n21:     \"cost\": 3.9851415,\n22:     \"tokens\": {\n23:       \"input\": 2581596,\n24:       \"output\": 15033,\n25:       \"reasoning\": 0,\n26:       \"cache\": {\n27:         \"read\": 159184,\n28:         \"write\": 0\n29:       }\n30:     },\n31:     \"permission\": [\n32:       {\n33:         \"permission\": \"question\",\n34:         \"pattern\": \"*\",\n35:         \"action\": \"deny\"\n36:       },\n37:       {\n38:         \"permission\": \"plan_enter\",\n39:         \"pattern\": \"*\",\n40:         \"action\": \"deny\"\n41:       },\n42:       {\n43:         \"permission\": \"plan_exit\",\n44:         \"pattern\": \"*\",\n45:         \"action\": \"deny\"\n46:       }\n47:     ],\n48:     \"time\": {\n49:       \"created\": 1779268031754,\n50:       \"updated\": 1779268681693\n51:     }\n52:   },\n53:   \"messages\": [\n54:     {\n55:       \"info\": {\n56:         \"role\": \"user\",\n57:         \"time\": {\n58:           \"created\": 1779268031837\n59:         },\n60:         \"agent\": \"build\",\n61:         \"model\": {\n62:           \"providerID\": \"openrouter\",\n63:           \"modelID\": \"mistralai/mistral-medium-3-5\"\n64:         },\n65:         \"summary\": {\n66:           \"diffs\": []\n67:         },\n68:         \"id\": \"msg_e44a3955d001FPc6hvqz4BeXoK\",\n69:         \"sessionID\": \"ses_1bb5c6af5ffee12J6XhK7wsvGs\"\n70:       },\n71:       \"parts\": [\n72:         {\n73:           \"type\": \"text\",\n74:           \"text\": \"\\\"# Analyze opencode runs\\n\\nI'm comparing how different AI coding agents implement the same prompt. Each run leaves an `opencode-export.json` transcript somewhere under `implementation/`. I'd like a script that reads all of them and produces one report comparing the runs.\\n\\nPlease write it in TypeScript and run it with `tsx`. Keep it simple â€” just the Node standard library. Put `analyze.ts`, `package.json` and `tsconfig.json` in the current folder and don't touch anything else in the repo.\\n\\nThe script should find every `opencode-export.json` under `implementation/`, ignoring `node_modules`. The repo root is the first parent folder that contains an `implementation/` directory â€” the script may be nested a few levels deep, so don't hardcode the path.\\n\\nFor each transcript, work out:\\n\\n- the total duration (`info.time.updated - info.time.created`, in ms) and total tokens (`info.tokens`), and\\n- a per-tool breakdown of time and tokens.\\n\\nEach tool call is a part with `type: \\\\\\\"tool\\\\\\\"` in `messages[].parts[]`, and its duration is `state.time.end - state.time.start`. Tokens aren't recorded per tool though â€” they're per step (`step-finish` parts carry `tokens.total`), so just split each step's tokens evenly across the tool calls in that step and mention in the report that it's an approximation.\\n\\nWrite a single Markdown report in the script's own folder that compares all the runs, with one section per implementation subfolder â€” a summary table up top (duration, tokens, cost per run), then the per-tool details for each. Don't write anything into the folders you're analyzing. Print a short summary to the console too.\\n\\nAfter creating the script also run it.\\n\\\"\",\n75:           \"id\": \"prt_e44a39568001RPdwoIkEZxlfd2\",\n76:           \"sessionID\": \"ses_1bb5c6af5ffee12J6XhK7wsvGs\",\n77:           \"messageID\": \"msg_e44a3955d001FPc6hvqz4BeXoK\"\n78:         }\n79:       ]\n80:     },\n\n(Showing lines 1-80 of 6262. Use offset=81 to continue.)\n</content>",
+            "metadata": {
+              "preview": "{\n  \"info\": {\n    \"id\": \"ses_1bb5c6af5ffee12J6XhK7wsvGs\",\n    \"slug\": \"tidy-river\",\n    \"projectID\": \"3de8d561997ee131183d1c77b6c61d8c1580ea12\",\n    \"directory\": \"C:\\\\Users\\\\KarinHuber\\\\source\\\\repos\\\\ai-agent-comparison\\\\implementation\\\\analyze-runs\\\\openrouter-mistralai-mistral-medium-3-5\",\n    \"path\": \"implementation/analyze-runs/openrouter-mistralai-mistral-medium-3-5\",\n    \"title\": \"Comparing AI coding agent runs\",\n    \"agent\": \"build\",\n    \"model\": {\n      \"id\": \"mistralai/mistral-medium-3-5\",\n      \"providerID\": \"openrouter\",\n      \"variant\": \"default\"\n    },\n    \"version\": \"1.15.5\",\n    \"summary\": {\n      \"additions\": 0,\n      \"deletions\": 0,\n      \"files\": 0\n    },",
+              "truncated": true,
+              "loaded": []
+            },
+            "title": "implementation\\analyze-runs\\openrouter-mistralai-mistral-medium-3-5\\opencode-export.json",
+            "time": {
+              "start": 1779268808649,
+              "end": 1779268808683
+            }
+          },
+          "id": "prt_e44af6fc2001hly3dRW7mVIsDA",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af5ef9001jdzieGHeX4Kc1V"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8966,
+            "input": 628,
+            "output": 146,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 8192
+            }
+          },
+          "cost": 0.011616,
+          "id": "prt_e44af723c001apltlGRSrCy5P2",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af5ef9001jdzieGHeX4Kc1V"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_e44af181a001kN97J4PttQGFm9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "low",
+        "path": {
+          "cwd": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+          "root": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison"
+        },
+        "cost": 0.06567,
+        "tokens": {
+          "total": 12219,
+          "input": 12036,
+          "output": 172,
+          "reasoning": 11,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "openai/gpt-5.5",
+        "providerID": "openrouter",
+        "time": {
+          "created": 1779268809764,
+          "completed": 1779268976118
+        },
+        "finish": "tool-calls",
+        "id": "msg_e44af7424001zULSeHRTXm7kHn",
+        "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H"
+      },
+      "parts": [
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44af7cdb001rfOXja5odQ6pVA",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af7424001zULSeHRTXm7kHn"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44af89c0001vk6OZWNid5scMB",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af7424001zULSeHRTXm7kHn"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44af9eac001MHas24p379AgSd",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af7424001zULSeHRTXm7kHn"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44afc2c7001bulG74xW0ta6xT",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af7424001zULSeHRTXm7kHn"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b0073e001f5czrYRTDX4FYW",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af7424001zULSeHRTXm7kHn"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b081a2001Jk4AlSVYEJGX8x",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af7424001zULSeHRTXm7kHn"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b0fc01001C3fzJb5rtDTP7R",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af7424001zULSeHRTXm7kHn"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b17788001kLG8IW5FGiGVXr",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af7424001zULSeHRTXm7kHn"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b1f9a1001ATi8QTLR1htX7p",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af7424001zULSeHRTXm7kHn"
+        },
+        {
+          "type": "tool",
+          "tool": "grep",
+          "callID": "call_8qMImoubBxla7lu4gydQkkfX",
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "\"type\": \"tool\"|\"type\": \"step-finish\"|\"tokens\"",
+              "path": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium",
+              "include": "opencode-export.json"
+            },
+            "output": "Found 50 matches\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json:\n  Line 22:     \"tokens\": {\n\n  Line 94:         \"tokens\": {\n\n  Line 134:           \"type\": \"tool\",\n\n  Line 197:           \"type\": \"step-finish\",\n\n  Line 198:           \"tokens\": {\n\n  Line 227:         \"tokens\": {\n\n  Line 256:           \"type\": \"tool\",\n\n  Line 286:           \"type\": \"tool\",\n\n  Line 315:           \"type\": \"step-finish\",\n\n  Line 316:           \"tokens\": {\n\n  Line 345:         \"tokens\": {\n\n  Line 385:           \"type\": \"tool\",\n\n  Line 419:           \"type\": \"step-finish\",\n\n  Line 420:           \"tokens\": {\n\n  Line 449:         \"tokens\": {\n\n  Line 478:           \"type\": \"tool\",\n\n  Line 519:           \"type\": \"step-finish\",\n\n  Line 520:           \"tokens\": {\n\n  Line 549:         \"tokens\": {\n\n  Line 578:           \"type\": \"tool\",\n\n  Line 612:           \"type\": \"step-finish\",\n\n  Line 613:           \"tokens\": {\n\n  Line 642:         \"tokens\": {\n\n  Line 2698:           \"type\": \"tool\",\n\n  Line 4756:           \"type\": \"step-finish\",\n\n  Line 4757:           \"tokens\": {\n\n  Line 4786:         \"tokens\": {\n\n  Line 4815:           \"type\": \"tool\",\n\n  Line 4878:           \"type\": \"step-finish\",\n\n  Line 4879:           \"tokens\": {\n\n  Line 4908:         \"tokens\": {\n\n  Line 4948:           \"type\": \"tool\",\n\n  Line 4984:           \"type\": \"step-finish\",\n\n  Line 4985:           \"tokens\": {\n\n  Line 5014:         \"tokens\": {\n\n  Line 5559:           \"type\": \"tool\",\n\n  Line 6091:           \"type\": \"tool\",\n\n  Line 6118:           \"type\": \"step-finish\",\n\n  Line 6119:           \"tokens\": {\n\n  Line 6148:         \"tokens\": {\n\n  Line 6177:           \"type\": \"tool\",\n\n  Line 6221:           \"type\": \"step-finish\",\n\n  Line 6222:           \"tokens\": {\n\n  Line 6251:         \"tokens\": {\n\n  Line 6880:           \"type\": \"tool\",\n\n  Line 7527:           \"type\": \"step-finish\",\n\n  Line 7528:           \"tokens\": {\n\n  Line 7557:         \"tokens\": {\n\n  Line 7599:           \"type\": \"step-finish\",\n\n  Line 7600:           \"tokens\": {\n",
+            "metadata": {
+              "matches": 50,
+              "truncated": false
+            },
+            "title": "\"type\": \"tool\"|\"type\": \"step-finish\"|\"tokens\"",
+            "time": {
+              "start": 1779268975031,
+              "end": 1779268975137
+            }
+          },
+          "metadata": {
+            "openrouter": {
+              "reasoning_details": [
+                {
+                  "type": "reasoning.encrypted",
+                  "data": "gAAAAABqDX1vR69PJL3R9zVGOkYjRdESnbrjQbThHS8mHV-pkzwEcHZxfb5K3Xy1MVQtcloMhZpXzgmZ0xeGi5PioPgwgrX1sU7NehfEcIa8A9P7oq80HKwxy-xqIhB0sOlAnKpmzzRGsgSGNodR5jhwurIZWvlT0HVTgPQ7OEDKnT-D4Tn7a8dvfctRkUfp3GzgLOjWY_blwclwxpzUrk4NJQEFotP4xpvTkmTt9Ba0V2HTItgvtqWHU4cd_h0li40iVi11kjYsfg2SOMq-XwEWtcP_SdT4_nnkPsilOgPjg8UEjhbWhj1vYgj9HkZPr-NnBx_ko4e3KzP4sX6C1YSBXULzOmMC_LgtuqcTHzi44Moyqmn9NCYWqKYu8v0JbTVBW77RskeT9GZ5KOlTs6yisOKyFXfso9eTp9-BzCjrlv6mJQDZGRNVi1JXSXRxYz2yXEzOvgYeg7hFtQWeMvP9hE3WxoIW1rmlpTU0CNAxD1vggfcLN6c4fmqn9sx_s0vvBK0k7gzdpRlE-pmfxjPLPahafbSmU5743kr0LA6o-Us-swApoBP7k66GMs2jDDLOtt-2um6cDknNHq3me8DPIeN0xhfi9MGKVnG6fTcOKGKeVXAHP1pAcIcR6DchAMakXVZ4Y9NvuFyvyI2Ly_VxhXqoe-zJQ_KU7Y8pG1J3H6MhU2MYGp2wY_hIuqlZXKUeVAxef8RzRIEcEKUFb0xOkCycne-7U_pZ7SXQdy4MFJWaRsGhxSW3zmSHHsR3_GSUhcLcCau9EPmvKtAfxc2bhoip900OBty6rnyDflJBq9_vI3V113IfFqy5CkFfpVALnQHIt4FVcuYaXG1Uw7ZwAtWqwGUDHrp9Z5huYO1wZOEa7ppSe32QBB2NlmpwslYCDGy62wRWN65MxSf5ypTXEyYlylHQ5PLspuBMwckd1v9zn-gyN3lq_w24SD5DP4lb6XXG9i3B",
+                  "id": "rs_04fe2ffdf0e47caf016a0d7d6d30a08195a59e49df6dac4b4b",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                }
+              ]
+            }
+          },
+          "id": "prt_e44b1f9a4001vIlXFrxusjRFhl",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af7424001zULSeHRTXm7kHn"
+        },
+        {
+          "type": "tool",
+          "tool": "grep",
+          "callID": "call_x1XpsclRpgybQTmYRWuJW7Bp",
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "\"tool\"|\"state\"|\"step-finish\"",
+              "path": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium",
+              "include": "opencode-export.json"
+            },
+            "output": "Found 51 matches\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json:\n  Line 134:           \"type\": \"tool\",\n\n  Line 135:           \"tool\": \"todowrite\",\n\n  Line 137:           \"state\": {\n\n  Line 197:           \"type\": \"step-finish\",\n\n  Line 256:           \"type\": \"tool\",\n\n  Line 257:           \"tool\": \"glob\",\n\n  Line 259:           \"state\": {\n\n  Line 286:           \"type\": \"tool\",\n\n  Line 287:           \"tool\": \"read\",\n\n  Line 289:           \"state\": {\n\n  Line 315:           \"type\": \"step-finish\",\n\n  Line 385:           \"type\": \"tool\",\n\n  Line 386:           \"tool\": \"read\",\n\n  Line 388:           \"state\": {\n\n  Line 419:           \"type\": \"step-finish\",\n\n  Line 478:           \"type\": \"tool\",\n\n  Line 479:           \"tool\": \"grep\",\n\n  Line 481:           \"state\": {\n\n  Line 519:           \"type\": \"step-finish\",\n\n  Line 578:           \"type\": \"tool\",\n\n  Line 579:           \"tool\": \"read\",\n\n  Line 581:           \"state\": {\n\n  Line 612:           \"type\": \"step-finish\",\n\n  Line 2698:           \"type\": \"tool\",\n\n  Line 2699:           \"tool\": \"apply_patch\",\n\n  Line 2701:           \"state\": {\n\n  Line 4756:           \"type\": \"step-finish\",\n\n  Line 4815:           \"type\": \"tool\",\n\n  Line 4816:           \"tool\": \"todowrite\",\n\n  Line 4818:           \"state\": {\n\n  Line 4878:           \"type\": \"step-finish\",\n\n  Line 4948:           \"type\": \"tool\",\n\n  Line 4949:           \"tool\": \"bash\",\n\n  Line 4951:           \"state\": {\n\n  Line 4984:           \"type\": \"step-finish\",\n\n  Line 5559:           \"type\": \"tool\",\n\n  Line 5560:           \"tool\": \"read\",\n\n  Line 5562:           \"state\": {\n\n  Line 6091:           \"type\": \"tool\",\n\n  Line 6092:           \"tool\": \"glob\",\n\n  Line 6094:           \"state\": {\n\n  Line 6118:           \"type\": \"step-finish\",\n\n  Line 6177:           \"type\": \"tool\",\n\n  Line 6178:           \"tool\": \"bash\",\n\n  Line 6180:           \"state\": {\n\n  Line 6221:           \"type\": \"step-finish\",\n\n  Line 6880:           \"type\": \"tool\",\n\n  Line 6881:           \"tool\": \"todowrite\",\n\n  Line 6883:           \"state\": {\n\n  Line 7527:           \"type\": \"step-finish\",\n\n  Line 7599:           \"type\": \"step-finish\",\n",
+            "metadata": {
+              "matches": 51,
+              "truncated": false
+            },
+            "title": "\"tool\"|\"state\"|\"step-finish\"",
+            "time": {
+              "start": 1779268975085,
+              "end": 1779268975205
+            }
+          },
+          "id": "prt_e44b1f9e5001TdgnCHg7PfDUCf",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af7424001zULSeHRTXm7kHn"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-finish",
+          "tokens": {
+            "total": 12219,
+            "input": 12036,
+            "output": 172,
+            "reasoning": 11,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0.06567,
+          "id": "prt_e44b1fc540015c2m0QlnUVzEPy",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44af7424001zULSeHRTXm7kHn"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_e44af181a001kN97J4PttQGFm9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "low",
+        "path": {
+          "cwd": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+          "root": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison"
+        },
+        "cost": 0.019223,
+        "tokens": {
+          "total": 13723,
+          "input": 1803,
+          "output": 144,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 11776
+          }
+        },
+        "modelID": "openai/gpt-5.5",
+        "providerID": "openrouter",
+        "time": {
+          "created": 1779268976125,
+          "completed": 1779268980443
+        },
+        "finish": "tool-calls",
+        "id": "msg_e44b1fdfd001dxRSkGBfLGohgV",
+        "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H"
+      },
+      "parts": [
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b20a20001gNvY0kH3OBpOop",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b1fdfd001dxRSkGBfLGohgV"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_oJfkfnCMYatG0kyweZ1GNGWH",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json",
+              "offset": 120,
+              "limit": 90
+            },
+            "output": "<path>C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json</path>\n<type>file</type>\n<content>\n120:           \"messageID\": \"msg_e4493adf9001iyYfxcyNBtMwtZ\"\n121:         },\n122:         {\n123:           \"type\": \"text\",\n124:           \"text\": \"I’ll add the requested TypeScript script and minimal project files only in the current folder, then run it with `tsx` to verify it generates the Markdown report.\",\n125:           \"time\": {\n126:             \"start\": 1779266991285,\n127:             \"end\": 1779266992987\n128:           },\n129:           \"id\": \"prt_e4493b4b500161OcHyC3cr6aVa\",\n130:           \"sessionID\": \"ses_1bb6c5302ffen1vVd4stedxp6v\",\n131:           \"messageID\": \"msg_e4493adf9001iyYfxcyNBtMwtZ\"\n132:         },\n133:         {\n134:           \"type\": \"tool\",\n135:           \"tool\": \"todowrite\",\n136:           \"callID\": \"call_Q0xFTYjdlzA4DQkVLYINvcA9\",\n137:           \"state\": {\n138:             \"status\": \"completed\",\n139:             \"input\": {\n140:               \"todos\": [\n141:                 {\n142:                   \"content\": \"Inspect current folder and sample transcript shape\",\n143:                   \"status\": \"in_progress\",\n144:                   \"priority\": \"high\"\n145:                 },\n146:                 {\n147:                   \"content\": \"Create analyze.ts, package.json, and tsconfig.json\",\n148:                   \"status\": \"pending\",\n149:                   \"priority\": \"high\"\n150:                 },\n151:                 {\n152:                   \"content\": \"Run script with tsx and verify report output\",\n153:                   \"status\": \"pending\",\n154:                   \"priority\": \"high\"\n155:                 }\n156:               ]\n157:             },\n158:             \"output\": \"[\\n  {\\n    \\\"content\\\": \\\"Inspect current folder and sample transcript shape\\\",\\n    \\\"status\\\": \\\"in_progress\\\",\\n    \\\"priority\\\": \\\"high\\\"\\n  },\\n  {\\n    \\\"content\\\": \\\"Create analyze.ts, package.json, and tsconfig.json\\\",\\n    \\\"status\\\": \\\"pending\\\",\\n    \\\"priority\\\": \\\"high\\\"\\n  },\\n  {\\n    \\\"content\\\": \\\"Run script with tsx and verify report output\\\",\\n    \\\"status\\\": \\\"pending\\\",\\n    \\\"priority\\\": \\\"high\\\"\\n  }\\n]\",\n159:             \"metadata\": {\n160:               \"todos\": [\n161:                 {\n162:                   \"content\": \"Inspect current folder and sample transcript shape\",\n163:                   \"status\": \"in_progress\",\n164:                   \"priority\": \"high\"\n165:                 },\n166:                 {\n167:                   \"content\": \"Create analyze.ts, package.json, and tsconfig.json\",\n168:                   \"status\": \"pending\",\n169:                   \"priority\": \"high\"\n170:                 },\n171:                 {\n172:                   \"content\": \"Run script with tsx and verify report output\",\n173:                   \"status\": \"pending\",\n174:                   \"priority\": \"high\"\n175:                 }\n176:               ],\n177:               \"truncated\": false\n178:             },\n179:             \"title\": \"3 todos\",\n180:             \"time\": {\n181:               \"start\": 1779266992978,\n182:               \"end\": 1779266992984\n183:             }\n184:           },\n185:           \"metadata\": {\n186:             \"openrouter\": {\n187:               \"reasoning_details\": []\n188:             }\n189:           },\n190:           \"id\": \"prt_e4493b84d001uwbTW5FfTqwIbq\",\n191:           \"sessionID\": \"ses_1bb6c5302ffen1vVd4stedxp6v\",\n192:           \"messageID\": \"msg_e4493adf9001iyYfxcyNBtMwtZ\"\n193:         },\n194:         {\n195:           \"reason\": \"tool-calls\",\n196:           \"snapshot\": \"4b825dc642cb6eb9a060e54bf8d69288fbee4904\",\n197:           \"type\": \"step-finish\",\n198:           \"tokens\": {\n199:             \"total\": 8494,\n200:             \"input\": 8373,\n201:             \"output\": 121,\n202:             \"reasoning\": 0,\n203:             \"cache\": {\n204:               \"write\": 0,\n205:               \"read\": 0\n206:             }\n207:           },\n208:           \"cost\": 0.045495,\n209:           \"id\": \"prt_e4493bd4c001skMbx9twd1DpY3\",\n\n(Showing lines 120-209 of 7618. Use offset=210 to continue.)\n</content>",
+            "metadata": {
+              "preview": "          \"messageID\": \"msg_e4493adf9001iyYfxcyNBtMwtZ\"\n        },\n        {\n          \"type\": \"text\",\n          \"text\": \"I’ll add the requested TypeScript script and minimal project files only in the current folder, then run it with `tsx` to verify it generates the Markdown report.\",\n          \"time\": {\n            \"start\": 1779266991285,\n            \"end\": 1779266992987\n          },\n          \"id\": \"prt_e4493b4b500161OcHyC3cr6aVa\",\n          \"sessionID\": \"ses_1bb6c5302ffen1vVd4stedxp6v\",\n          \"messageID\": \"msg_e4493adf9001iyYfxcyNBtMwtZ\"\n        },\n        {\n          \"type\": \"tool\",\n          \"tool\": \"todowrite\",\n          \"callID\": \"call_Q0xFTYjdlzA4DQkVLYINvcA9\",\n          \"state\": {\n            \"status\": \"completed\",\n            \"input\": {",
+              "truncated": true,
+              "loaded": []
+            },
+            "title": "implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json",
+            "time": {
+              "start": 1779268979242,
+              "end": 1779268979297
+            }
+          },
+          "metadata": {
+            "openrouter": {
+              "reasoning_details": []
+            }
+          },
+          "id": "prt_e44b20a23001ylfsWkdQNPjbm5",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b1fdfd001dxRSkGBfLGohgV"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_SaPRsC1fMMHBHsIrtiAJiu1y",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json",
+              "offset": 190,
+              "limit": 45
+            },
+            "output": "<path>C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json</path>\n<type>file</type>\n<content>\n190:           \"id\": \"prt_e4493b84d001uwbTW5FfTqwIbq\",\n191:           \"sessionID\": \"ses_1bb6c5302ffen1vVd4stedxp6v\",\n192:           \"messageID\": \"msg_e4493adf9001iyYfxcyNBtMwtZ\"\n193:         },\n194:         {\n195:           \"reason\": \"tool-calls\",\n196:           \"snapshot\": \"4b825dc642cb6eb9a060e54bf8d69288fbee4904\",\n197:           \"type\": \"step-finish\",\n198:           \"tokens\": {\n199:             \"total\": 8494,\n200:             \"input\": 8373,\n201:             \"output\": 121,\n202:             \"reasoning\": 0,\n203:             \"cache\": {\n204:               \"write\": 0,\n205:               \"read\": 0\n206:             }\n207:           },\n208:           \"cost\": 0.045495,\n209:           \"id\": \"prt_e4493bd4c001skMbx9twd1DpY3\",\n210:           \"sessionID\": \"ses_1bb6c5302ffen1vVd4stedxp6v\",\n211:           \"messageID\": \"msg_e4493adf9001iyYfxcyNBtMwtZ\"\n212:         }\n213:       ]\n214:     },\n215:     {\n216:       \"info\": {\n217:         \"parentID\": \"msg_e4493ad480012Thg3Q1KgNtJmK\",\n218:         \"role\": \"assistant\",\n219:         \"mode\": \"build\",\n220:         \"agent\": \"build\",\n221:         \"variant\": \"medium\",\n222:         \"path\": {\n223:           \"cwd\": \"C:\\\\Users\\\\KarinHuber\\\\source\\\\repos\\\\ai-agent-comparison\\\\implementation\\\\analyze-runs\\\\openrouter-openai-gpt-5.5-medium\",\n224:           \"root\": \"C:\\\\Users\\\\KarinHuber\\\\source\\\\repos\\\\ai-agent-comparison\"\n225:         },\n226:         \"cost\": 0.009661,\n227:         \"tokens\": {\n228:           \"total\": 8725,\n229:           \"input\": 417,\n230:           \"output\": 116,\n231:           \"reasoning\": 0,\n232:           \"cache\": {\n233:             \"write\": 0,\n234:             \"read\": 8192\n\n(Showing lines 190-234 of 7618. Use offset=235 to continue.)\n</content>",
+            "metadata": {
+              "preview": "          \"id\": \"prt_e4493b84d001uwbTW5FfTqwIbq\",\n          \"sessionID\": \"ses_1bb6c5302ffen1vVd4stedxp6v\",\n          \"messageID\": \"msg_e4493adf9001iyYfxcyNBtMwtZ\"\n        },\n        {\n          \"reason\": \"tool-calls\",\n          \"snapshot\": \"4b825dc642cb6eb9a060e54bf8d69288fbee4904\",\n          \"type\": \"step-finish\",\n          \"tokens\": {\n            \"total\": 8494,\n            \"input\": 8373,\n            \"output\": 121,\n            \"reasoning\": 0,\n            \"cache\": {\n              \"write\": 0,\n              \"read\": 0\n            }\n          },\n          \"cost\": 0.045495,\n          \"id\": \"prt_e4493bd4c001skMbx9twd1DpY3\",",
+              "truncated": true,
+              "loaded": []
+            },
+            "title": "implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json",
+            "time": {
+              "start": 1779268979255,
+              "end": 1779268979302
+            }
+          },
+          "id": "prt_e44b20a2e001wGaE2kslIAsWiV",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b1fdfd001dxRSkGBfLGohgV"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-finish",
+          "tokens": {
+            "total": 13723,
+            "input": 1803,
+            "output": 144,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 11776
+            }
+          },
+          "cost": 0.019223,
+          "id": "prt_e44b20ced001z3ilqSBmI5c53Y",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b1fdfd001dxRSkGBfLGohgV"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_e44af181a001kN97J4PttQGFm9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "low",
+        "path": {
+          "cwd": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+          "root": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison"
+        },
+        "cost": 0.036373,
+        "tokens": {
+          "total": 15898,
+          "input": 3727,
+          "output": 149,
+          "reasoning": 246,
+          "cache": {
+            "write": 0,
+            "read": 11776
+          }
+        },
+        "modelID": "openai/gpt-5.5",
+        "providerID": "openrouter",
+        "time": {
+          "created": 1779268980450,
+          "completed": 1779269003098
+        },
+        "finish": "tool-calls",
+        "id": "msg_e44b20ee2001BL4XNRGfupsTFf",
+        "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H"
+      },
+      "parts": [
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b2193a001k19eyDJKnIUfQq",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b20ee2001BL4XNRGfupsTFf"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b22a20001I9vSIVBnVO1wys",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b20ee2001BL4XNRGfupsTFf"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b25c31001Bh0CygCv57V5pq",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b20ee2001BL4XNRGfupsTFf"
+        },
+        {
+          "type": "text",
+          "text": "I found the transcript structure: tool parts include `tool` and `state.time`, while `step-finish` parts carry `tokens.total` after the tools for that step. I’m adding a small parser that walks parts in order and allocates each step’s token total evenly across the pending tool calls.",
+          "time": {
+            "start": 1779269000244,
+            "end": 1779269002184
+          },
+          "id": "prt_e44b25c340010sNTHg5mEwphyL",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b20ee2001BL4XNRGfupsTFf"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_4Go3xtgSjA5jQfAE9yy5Fntt",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "Create analyze.ts, package.json, and tsconfig.json in current folder",
+                  "status": "in_progress",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run analyzer with tsx",
+                  "status": "pending",
+                  "priority": "high"
+                },
+                {
+                  "content": "Verify report and console output",
+                  "status": "pending",
+                  "priority": "medium"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"Create analyze.ts, package.json, and tsconfig.json in current folder\",\n    \"status\": \"in_progress\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Run analyzer with tsx\",\n    \"status\": \"pending\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Verify report and console output\",\n    \"status\": \"pending\",\n    \"priority\": \"medium\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "Create analyze.ts, package.json, and tsconfig.json in current folder",
+                  "status": "in_progress",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run analyzer with tsx",
+                  "status": "pending",
+                  "priority": "high"
+                },
+                {
+                  "content": "Verify report and console output",
+                  "status": "pending",
+                  "priority": "medium"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "3 todos",
+            "time": {
+              "start": 1779269002106,
+              "end": 1779269002112
+            }
+          },
+          "metadata": {
+            "openrouter": {
+              "reasoning_details": [
+                {
+                  "type": "reasoning.encrypted",
+                  "data": "gAAAAABqDX2IXZFBqVlrwi0_D8ecgK9GFiBdeRuIgnKLaxSgVEUDp4KctTwewcpPwJBpZEJulPz6icF3yafuhjf9Ju-NM-v95jHNwQNC5ZJlz9my_P5v8ZsnrbdXVuSZdGgAHFu6UbI4wuOZ7f_6EOtnpDBFguhCrFSyqp2OQnoaNZ6rxOhlht2YRtngm5S9ZGC-uOlmVisAEJEE_8rtHucPG3uN7CeXnRqKP4noJghSzqI3pkUjnDLiyjOOjH6VAX3xEe6tGLLLXNeHpTZgCc1bl0qqZzWcGKdjDk73KhJFNw97eH15CeD2ztHAfOrTQZaAgmseYE0JRYT7z_PfXLmxpVtF71TKqrFD4RefJ-x8cd8zARjmbtIRiwaTQvQQLPqbFjlwqwhEyL5u07rF3pR8zsSwcfPbq1JuGqNqpILjIFbEddXVhSvz8OZUIzwMDuoR9-Q7idFM5xbYWhxUr5ooS_GJKQYp5Y00_58Tj-zlLTuACUrULGLkvgYQQcIjYxWrKpMMeIPclALm5sr7MkUQo0BjnCMmxfA2fP8AyUCBd-fcPxsy3H3xJXAjuv99QxUKtaz59dPmFzKHHZwaWXnUhsi4YLY6AVNeNqbiKO6HM7OOcnI9Tt9zJSTcffxtigztMT8FY0j_p4SwzbwdsXw5u5hmZ6O1-0mKmZnQ2W_NtcviDGg6yv0cbkhc9sCBRE9thirU7kZXB0Lx8I_nLmpgT9yHGSpmHFXfKy4jMM7ZOZXxeBbR6nTnsUzMmjYluYo5vevNaPgzgctuGnbczJpFXRmYAVhaucbfHa_b_RIryjUyyNfvrR83PWAd40VKH4Ti9VENh0b4ISXUgC9Qkr-RAF4hdBhn4PrsJC7RV0Zg3_ct6XAMxTgQ464HbOOv7PctRwkoF9u0-b_km7l5BeYeHq-1RakAJN_srdafeQuFzUv3T1xg885ZEmoSlrSK6OeD1V_A9vboTaYi1yzTifHPE5BhkCTIMK6q3ZbXCWHXJM7rHCxk6470YI42N0tw1ZNGXHsD-Ac8FFDhVQ1Qm7FSZdiz00eWuE2dZaI1CHPNj4lmeCp7SpxkAHaFG9e_EP9kMyz-AKpnyvRf-2DTRHmrzD_Sa3bXtx_xhSSK2FaUD2IF65Iaspon8845xFP0d3lBE-1E7luep-14_Bgpvn3pJmjUBN6LqP7MYs9O2VyWETB5YY3l_HHiIEbhyLVz727deZq2KU_D2yDGUr4kPA-Pn03_Hke6e4oN1u7MaXavcYWWWfi-Wnbs7yQtpNZeH5U72joRHPhm_LYPbSu8GUiBjK9WCUh7wiBWKvoCEmAWKm9TZbJILLW87uz7eCdK6Qoavm_JvVPCzkwTA7GL1GXgt7Cp1hfgmWw52oRaJpCCDPO4fTegpdjmKur0Kb_X5RHRwFhnyRSbv5SBp91RabU6US6JQZf6wVZBMa72WunOPYG5sOcy12vS81SuVXJzxAmDlIe3S_Fmo8sZgY680e_ErgvJKp7hh8011onfs1uU1PWWL_45DhFTJeuNZNK3j1cOvSGkiUgFJSG4qJ9M9lMoU7xY0egtZHKE_jn2ENiLdnLGV16IG1lklUkLSoVd7mV4l4TkUzAzs-7kEpSIgUUNvOkqYJTK9juu-GxjS7eW6_vuETDc13pAL0VBkyBdFPUTkvPoq2N-i9iXtoIhomU7HhYS_EJjr_9GC_9UuO1Sa0zz0Jp1csEbzdwwAwLebyD4uU1OYT5ehK63IfvvgVVd5Up2ASR4eo8OYBTc-YwJRvGpWjeiBt3cBAuht-1eSPd-mmywyBMT5QOxl3Q6hnYIiKAod_f8YUmPQes5eCkwkojmpXE7eUtKBm_OD_Uf2_hkccVkQZKW4EhBF6JLPpURJQQqqLJuY_gU9uAuV5ipZDu9Jbh7M_ceUU-0zBxTCgmXrvipteSzVAK12uIRicLjGeBUSOsqBIBtG9rmSlesf8ecv5uMS25JthQ-EEqSLwJwxuTZaFEXzwnncZc9THlf7uKeObVZ6XBUzkaAAoFBk1jvaQg9PxF0ICS76sq234r_lY1V7mk8TNsLiynX95OCym09h6VxgACYx5ZVGKtBF4tQKIrdKxQY8AXKf_QlCNVQxT2YC0_J25a24nqNCuDagDiiJGswkI7ms69gxSxvav2t206Me5noOGbeVJXBA0aVfBaHcU-XIzZ45KvqnjacSV-UfVvSkK4vVNjteW3_udmdSWjcCoTRTOmotwYHC6LdUjs-rVkPAZnZrXUP12q5HhUuEXEux5czQQvgcV5mrkNXM2KX95Kq-A6nrLgOvlBP-hXXRFwD4CgQuIsMAc2-4YVKrhbJ5YMR4jgGVwxxDBnuAd9aUcR5dKD8zcmM_ga93iAVqZZCWbhK10-27reM692yLtcGg_WyBg40UEEJQblTvUHS_sjzzl07GSzNCqbggAOWDczsK98yZqBYbf-2Y-Uq7fPdRMT0JILGUuoU8lhKxkvn72z_eOmtZEj9n2YtlN7CYOpAlFu4kffNGVlMnw5_CsIBmw==",
+                  "id": "rs_04fe2ffdf0e47caf016a0d7d80fc5c8195a0a44e4e1f8f732b",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                }
+              ]
+            }
+          },
+          "id": "prt_e44b26090001O9sVjmLuyfh30F",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b20ee2001BL4XNRGfupsTFf"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-finish",
+          "tokens": {
+            "total": 15898,
+            "input": 3727,
+            "output": 149,
+            "reasoning": 246,
+            "cache": {
+              "write": 0,
+              "read": 11776
+            }
+          },
+          "cost": 0.036373,
+          "id": "prt_e44b2659d001oIKYxgeAY66715",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b20ee2001BL4XNRGfupsTFf"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_e44af181a001kN97J4PttQGFm9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "low",
+        "path": {
+          "cwd": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+          "root": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison"
+        },
+        "cost": 0.16123,
+        "tokens": {
+          "total": 18496,
+          "input": 15746,
+          "output": 2750,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "openai/gpt-5.5",
+        "providerID": "openrouter",
+        "time": {
+          "created": 1779269003104,
+          "completed": 1779269038931
+        },
+        "finish": "tool-calls",
+        "id": "msg_e44b26760001hcI6bn2fifK9BT",
+        "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H"
+      },
+      "parts": [
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b26f490017koj1PRn0gbQdX",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b26760001hcI6bn2fifK9BT"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b27e97001V5LIHtLa1EmQRP",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b26760001hcI6bn2fifK9BT"
+        },
+        {
+          "type": "tool",
+          "tool": "apply_patch",
+          "callID": "call_j5s0oHfqoc71KXilomyGe8Bv",
+          "state": {
+            "status": "completed",
+            "input": {
+              "patchText": "*** Begin Patch\n*** Add File: package.json\n+{\n+  \"name\": \"analyze-opencode-runs\",\n+  \"version\": \"1.0.0\",\n+  \"private\": true,\n+  \"type\": \"module\",\n+  \"scripts\": {\n+    \"analyze\": \"tsx analyze.ts\"\n+  },\n+  \"devDependencies\": {\n+    \"@types/node\": \"latest\",\n+    \"tsx\": \"latest\",\n+    \"typescript\": \"latest\"\n+  }\n+}\n*** Add File: tsconfig.json\n+{\n+  \"compilerOptions\": {\n+    \"target\": \"ES2022\",\n+    \"module\": \"NodeNext\",\n+    \"moduleResolution\": \"NodeNext\",\n+    \"strict\": true,\n+    \"esModuleInterop\": true,\n+    \"skipLibCheck\": true,\n+    \"types\": [\"node\"]\n+  }\n+}\n*** Add File: analyze.ts\n+import { existsSync } from \"node:fs\";\n+import { readdir, readFile, writeFile } from \"node:fs/promises\";\n+import path from \"node:path\";\n+import { fileURLToPath } from \"node:url\";\n+\n+type TokenCounts = {\n+  total?: number;\n+  input?: number;\n+  output?: number;\n+  reasoning?: number;\n+  cache?: {\n+    read?: number;\n+    write?: number;\n+  };\n+};\n+\n+type ToolPart = {\n+  type: \"tool\";\n+  tool?: string;\n+  state?: {\n+    time?: {\n+      start?: number;\n+      end?: number;\n+    };\n+  };\n+};\n+\n+type StepFinishPart = {\n+  type: \"step-finish\";\n+  tokens?: TokenCounts;\n+};\n+\n+type Part = ToolPart | StepFinishPart | { type?: string };\n+\n+type Transcript = {\n+  info?: {\n+    path?: string;\n+    cost?: number;\n+    tokens?: TokenCounts;\n+    time?: {\n+      created?: number;\n+      updated?: number;\n+    };\n+  };\n+  messages?: Array<{\n+    parts?: Part[];\n+  }>;\n+};\n+\n+type ToolStats = {\n+  calls: number;\n+  durationMs: number;\n+  allocatedTokens: number;\n+};\n+\n+type RunStats = {\n+  name: string;\n+  relativePath: string;\n+  transcriptPath: string;\n+  durationMs: number;\n+  tokens: number;\n+  cost: number;\n+  tools: Map<string, ToolStats>;\n+};\n+\n+const scriptDir = path.dirname(fileURLToPath(import.meta.url));\n+\n+async function main() {\n+  const repoRoot = findRepoRoot(scriptDir);\n+  const implementationDir = path.join(repoRoot, \"implementation\");\n+  const transcriptPaths = await findTranscripts(implementationDir);\n+  const runs = await Promise.all(\n+    transcriptPaths.map((transcriptPath) => analyzeTranscript(repoRoot, transcriptPath)),\n+  );\n+\n+  runs.sort((a, b) => a.relativePath.localeCompare(b.relativePath));\n+\n+  const report = buildReport(runs);\n+  const reportPath = path.join(scriptDir, \"opencode-runs-report.md\");\n+  await writeFile(reportPath, report, \"utf8\");\n+\n+  const totalTokens = runs.reduce((sum, run) => sum + run.tokens, 0);\n+  const totalCost = runs.reduce((sum, run) => sum + run.cost, 0);\n+  console.log(`Analyzed ${runs.length} runs.`);\n+  console.log(`Total tokens: ${formatNumber(totalTokens)}`);\n+  console.log(`Total cost: ${formatCurrency(totalCost)}`);\n+  console.log(`Report: ${reportPath}`);\n+}\n+\n+function findRepoRoot(startDir: string) {\n+  let current = startDir;\n+\n+  while (true) {\n+    if (existsSync(path.join(current, \"implementation\"))) {\n+      return current;\n+    }\n+\n+    const parent = path.dirname(current);\n+    if (parent === current) {\n+      throw new Error(\"Could not find a parent directory containing implementation/.\");\n+    }\n+\n+    current = parent;\n+  }\n+}\n+\n+async function findTranscripts(dir: string): Promise<string[]> {\n+  const entries = await readdir(dir, { withFileTypes: true });\n+  const results: string[] = [];\n+\n+  for (const entry of entries) {\n+    const fullPath = path.join(dir, entry.name);\n+\n+    if (entry.isDirectory()) {\n+      if (entry.name !== \"node_modules\") {\n+        results.push(...(await findTranscripts(fullPath)));\n+      }\n+    } else if (entry.isFile() && entry.name === \"opencode-export.json\") {\n+      results.push(fullPath);\n+    }\n+  }\n+\n+  return results;\n+}\n+\n+async function analyzeTranscript(repoRoot: string, transcriptPath: string): Promise<RunStats> {\n+  const transcript = JSON.parse(await readFile(transcriptPath, \"utf8\")) as Transcript;\n+  const relativePath = path.relative(repoRoot, path.dirname(transcriptPath)).replaceAll(path.sep, \"/\");\n+  const name = relativePath.replace(/^implementation\\//, \"\");\n+  const created = transcript.info?.time?.created ?? 0;\n+  const updated = transcript.info?.time?.updated ?? created;\n+  const tools = new Map<string, ToolStats>();\n+  let pendingTools: ToolPart[] = [];\n+\n+  for (const message of transcript.messages ?? []) {\n+    for (const part of message.parts ?? []) {\n+      if (part.type === \"tool\") {\n+        addToolTiming(tools, part);\n+        pendingTools.push(part);\n+      } else if (part.type === \"step-finish\") {\n+        allocateStepTokens(tools, pendingTools, part.tokens?.total ?? 0);\n+        pendingTools = [];\n+      }\n+    }\n+  }\n+\n+  return {\n+    name,\n+    relativePath,\n+    transcriptPath,\n+    durationMs: Math.max(0, updated - created),\n+    tokens: tokenTotal(transcript.info?.tokens),\n+    cost: transcript.info?.cost ?? 0,\n+    tools,\n+  };\n+}\n+\n+function addToolTiming(tools: Map<string, ToolStats>, part: ToolPart) {\n+  const name = part.tool ?? \"unknown\";\n+  const stats = getToolStats(tools, name);\n+  const start = part.state?.time?.start;\n+  const end = part.state?.time?.end;\n+\n+  stats.calls += 1;\n+  if (typeof start === \"number\" && typeof end === \"number\" && end >= start) {\n+    stats.durationMs += end - start;\n+  }\n+}\n+\n+function allocateStepTokens(tools: Map<string, ToolStats>, stepTools: ToolPart[], tokens: number) {\n+  if (stepTools.length === 0 || tokens <= 0) {\n+    return;\n+  }\n+\n+  const tokensPerTool = tokens / stepTools.length;\n+  for (const tool of stepTools) {\n+    getToolStats(tools, tool.tool ?? \"unknown\").allocatedTokens += tokensPerTool;\n+  }\n+}\n+\n+function getToolStats(tools: Map<string, ToolStats>, name: string) {\n+  const existing = tools.get(name);\n+  if (existing) {\n+    return existing;\n+  }\n+\n+  const created = { calls: 0, durationMs: 0, allocatedTokens: 0 };\n+  tools.set(name, created);\n+  return created;\n+}\n+\n+function tokenTotal(tokens: TokenCounts | undefined) {\n+  if (!tokens) {\n+    return 0;\n+  }\n+\n+  return (\n+    (tokens.total ?? 0) ||\n+    (tokens.input ?? 0) +\n+      (tokens.output ?? 0) +\n+      (tokens.reasoning ?? 0) +\n+      (tokens.cache?.read ?? 0) +\n+      (tokens.cache?.write ?? 0)\n+  );\n+}\n+\n+function buildReport(runs: RunStats[]) {\n+  const lines = [\n+    \"# OpenCode Runs Report\",\n+    \"\",\n+    `Generated: ${new Date().toISOString()}`,\n+    \"\",\n+    \"Tool token counts are approximate. OpenCode records tokens per step, not per tool call, so each step's `tokens.total` was split evenly across the tool calls in that step.\",\n+    \"\",\n+    \"## Summary\",\n+    \"\",\n+    \"| Run | Duration (ms) | Tokens | Cost |\",\n+    \"| --- | ---: | ---: | ---: |\",\n+  ];\n+\n+  for (const run of runs) {\n+    lines.push(\n+      `| ${escapeMarkdown(run.name)} | ${formatNumber(run.durationMs)} | ${formatNumber(run.tokens)} | ${formatCurrency(run.cost)} |`,\n+    );\n+  }\n+\n+  for (const run of runs) {\n+    lines.push(\"\", `## ${run.name}`, \"\", `Transcript: \\`${run.relativePath}/opencode-export.json\\``, \"\");\n+    lines.push(\"| Tool | Calls | Time (ms) | Approx. tokens |\", \"| --- | ---: | ---: | ---: |\");\n+\n+    const toolRows = [...run.tools.entries()].sort((a, b) => b[1].durationMs - a[1].durationMs);\n+    if (toolRows.length === 0) {\n+      lines.push(\"| No tool calls | 0 | 0 | 0 |\");\n+    } else {\n+      for (const [tool, stats] of toolRows) {\n+        lines.push(\n+          `| ${escapeMarkdown(tool)} | ${formatNumber(stats.calls)} | ${formatNumber(stats.durationMs)} | ${formatNumber(Math.round(stats.allocatedTokens))} |`,\n+        );\n+      }\n+    }\n+  }\n+\n+  lines.push(\"\");\n+  return lines.join(\"\\n\");\n+}\n+\n+function escapeMarkdown(value: string) {\n+  return value.replaceAll(\"|\", \"\\\\|\");\n+}\n+\n+function formatNumber(value: number) {\n+  return new Intl.NumberFormat(\"en-US\", { maximumFractionDigits: 0 }).format(value);\n+}\n+\n+function formatCurrency(value: number) {\n+  return new Intl.NumberFormat(\"en-US\", {\n+    style: \"currency\",\n+    currency: \"USD\",\n+    minimumFractionDigits: 4,\n+    maximumFractionDigits: 6,\n+  }).format(value);\n+}\n+\n+main().catch((error: unknown) => {\n+  console.error(error instanceof Error ? error.message : error);\n+  process.exitCode = 1;\n+});\n*** End Patch"
+            },
+            "output": "Success. Updated the following files:\nA implementation/analyze-runs/openrouter-openai-gpt-5.5-low/package.json\nA implementation/analyze-runs/openrouter-openai-gpt-5.5-low/tsconfig.json\nA implementation/analyze-runs/openrouter-openai-gpt-5.5-low/analyze.ts",
+            "metadata": {
+              "diff": "Index: C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\package.json\n===================================================================\n--- C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\package.json\n+++ C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\package.json\n@@ -0,0 +1,14 @@\n+{\n+  \"name\": \"analyze-opencode-runs\",\n+  \"version\": \"1.0.0\",\n+  \"private\": true,\n+  \"type\": \"module\",\n+  \"scripts\": {\n+    \"analyze\": \"tsx analyze.ts\"\n+  },\n+  \"devDependencies\": {\n+    \"@types/node\": \"latest\",\n+    \"tsx\": \"latest\",\n+    \"typescript\": \"latest\"\n+  }\n+}\n\nIndex: C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\tsconfig.json\n===================================================================\n--- C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\tsconfig.json\n+++ C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\tsconfig.json\n@@ -0,0 +1,11 @@\n+{\n+  \"compilerOptions\": {\n+    \"target\": \"ES2022\",\n+    \"module\": \"NodeNext\",\n+    \"moduleResolution\": \"NodeNext\",\n+    \"strict\": true,\n+    \"esModuleInterop\": true,\n+    \"skipLibCheck\": true,\n+    \"types\": [\"node\"]\n+  }\n+}\n\nIndex: C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\analyze.ts\n===================================================================\n--- C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\analyze.ts\n+++ C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\analyze.ts\n@@ -0,0 +1,267 @@\n+import { existsSync } from \"node:fs\";\n+import { readdir, readFile, writeFile } from \"node:fs/promises\";\n+import path from \"node:path\";\n+import { fileURLToPath } from \"node:url\";\n+\n+type TokenCounts = {\n+  total?: number;\n+  input?: number;\n+  output?: number;\n+  reasoning?: number;\n+  cache?: {\n+    read?: number;\n+    write?: number;\n+  };\n+};\n+\n+type ToolPart = {\n+  type: \"tool\";\n+  tool?: string;\n+  state?: {\n+    time?: {\n+      start?: number;\n+      end?: number;\n+    };\n+  };\n+};\n+\n+type StepFinishPart = {\n+  type: \"step-finish\";\n+  tokens?: TokenCounts;\n+};\n+\n+type Part = ToolPart | StepFinishPart | { type?: string };\n+\n+type Transcript = {\n+  info?: {\n+    path?: string;\n+    cost?: number;\n+    tokens?: TokenCounts;\n+    time?: {\n+      created?: number;\n+      updated?: number;\n+    };\n+  };\n+  messages?: Array<{\n+    parts?: Part[];\n+  }>;\n+};\n+\n+type ToolStats = {\n+  calls: number;\n+  durationMs: number;\n+  allocatedTokens: number;\n+};\n+\n+type RunStats = {\n+  name: string;\n+  relativePath: string;\n+  transcriptPath: string;\n+  durationMs: number;\n+  tokens: number;\n+  cost: number;\n+  tools: Map<string, ToolStats>;\n+};\n+\n+const scriptDir = path.dirname(fileURLToPath(import.meta.url));\n+\n+async function main() {\n+  const repoRoot = findRepoRoot(scriptDir);\n+  const implementationDir = path.join(repoRoot, \"implementation\");\n+  const transcriptPaths = await findTranscripts(implementationDir);\n+  const runs = await Promise.all(\n+    transcriptPaths.map((transcriptPath) => analyzeTranscript(repoRoot, transcriptPath)),\n+  );\n+\n+  runs.sort((a, b) => a.relativePath.localeCompare(b.relativePath));\n+\n+  const report = buildReport(runs);\n+  const reportPath = path.join(scriptDir, \"opencode-runs-report.md\");\n+  await writeFile(reportPath, report, \"utf8\");\n+\n+  const totalTokens = runs.reduce((sum, run) => sum + run.tokens, 0);\n+  const totalCost = runs.reduce((sum, run) => sum + run.cost, 0);\n+  console.log(`Analyzed ${runs.length} runs.`);\n+  console.log(`Total tokens: ${formatNumber(totalTokens)}`);\n+  console.log(`Total cost: ${formatCurrency(totalCost)}`);\n+  console.log(`Report: ${reportPath}`);\n+}\n+\n+function findRepoRoot(startDir: string) {\n+  let current = startDir;\n+\n+  while (true) {\n+    if (existsSync(path.join(current, \"implementation\"))) {\n+      return current;\n+    }\n+\n+    const parent = path.dirname(current);\n+    if (parent === current) {\n+      throw new Error(\"Could not find a parent directory containing implementation/.\");\n+    }\n+\n+    current = parent;\n+  }\n+}\n+\n+async function findTranscripts(dir: string): Promise<string[]> {\n+  const entries = await readdir(dir, { withFileTypes: true });\n+  const results: string[] = [];\n+\n+  for (const entry of entries) {\n+    const fullPath = path.join(dir, entry.name);\n+\n+    if (entry.isDirectory()) {\n+      if (entry.name !== \"node_modules\") {\n+        results.push(...(await findTranscripts(fullPath)));\n+      }\n+    } else if (entry.isFile() && entry.name === \"opencode-export.json\") {\n+      results.push(fullPath);\n+    }\n+  }\n+\n+  return results;\n+}\n+\n+async function analyzeTranscript(repoRoot: string, transcriptPath: string): Promise<RunStats> {\n+  const transcript = JSON.parse(await readFile(transcriptPath, \"utf8\")) as Transcript;\n+  const relativePath = path.relative(repoRoot, path.dirname(transcriptPath)).replaceAll(path.sep, \"/\");\n+  const name = relativePath.replace(/^implementation\\//, \"\");\n+  const created = transcript.info?.time?.created ?? 0;\n+  const updated = transcript.info?.time?.updated ?? created;\n+  const tools = new Map<string, ToolStats>();\n+  let pendingTools: ToolPart[] = [];\n+\n+  for (const message of transcript.messages ?? []) {\n+    for (const part of message.parts ?? []) {\n+      if (part.type === \"tool\") {\n+        addToolTiming(tools, part);\n+        pendingTools.push(part);\n+      } else if (part.type === \"step-finish\") {\n+        allocateStepTokens(tools, pendingTools, part.tokens?.total ?? 0);\n+        pendingTools = [];\n+      }\n+    }\n+  }\n+\n+  return {\n+    name,\n+    relativePath,\n+    transcriptPath,\n+    durationMs: Math.max(0, updated - created),\n+    tokens: tokenTotal(transcript.info?.tokens),\n+    cost: transcript.info?.cost ?? 0,\n+    tools,\n+  };\n+}\n+\n+function addToolTiming(tools: Map<string, ToolStats>, part: ToolPart) {\n+  const name = part.tool ?? \"unknown\";\n+  const stats = getToolStats(tools, name);\n+  const start = part.state?.time?.start;\n+  const end = part.state?.time?.end;\n+\n+  stats.calls += 1;\n+  if (typeof start === \"number\" && typeof end === \"number\" && end >= start) {\n+    stats.durationMs += end - start;\n+  }\n+}\n+\n+function allocateStepTokens(tools: Map<string, ToolStats>, stepTools: ToolPart[], tokens: number) {\n+  if (stepTools.length === 0 || tokens <= 0) {\n+    return;\n+  }\n+\n+  const tokensPerTool = tokens / stepTools.length;\n+  for (const tool of stepTools) {\n+    getToolStats(tools, tool.tool ?? \"unknown\").allocatedTokens += tokensPerTool;\n+  }\n+}\n+\n+function getToolStats(tools: Map<string, ToolStats>, name: string) {\n+  const existing = tools.get(name);\n+  if (existing) {\n+    return existing;\n+  }\n+\n+  const created = { calls: 0, durationMs: 0, allocatedTokens: 0 };\n+  tools.set(name, created);\n+  return created;\n+}\n+\n+function tokenTotal(tokens: TokenCounts | undefined) {\n+  if (!tokens) {\n+    return 0;\n+  }\n+\n+  return (\n+    (tokens.total ?? 0) ||\n+    (tokens.input ?? 0) +\n+      (tokens.output ?? 0) +\n+      (tokens.reasoning ?? 0) +\n+      (tokens.cache?.read ?? 0) +\n+      (tokens.cache?.write ?? 0)\n+  );\n+}\n+\n+function buildReport(runs: RunStats[]) {\n+  const lines = [\n+    \"# OpenCode Runs Report\",\n+    \"\",\n+    `Generated: ${new Date().toISOString()}`,\n+    \"\",\n+    \"Tool token counts are approximate. OpenCode records tokens per step, not per tool call, so each step's `tokens.total` was split evenly across the tool calls in that step.\",\n+    \"\",\n+    \"## Summary\",\n+    \"\",\n+    \"| Run | Duration (ms) | Tokens | Cost |\",\n+    \"| --- | ---: | ---: | ---: |\",\n+  ];\n+\n+  for (const run of runs) {\n+    lines.push(\n+      `| ${escapeMarkdown(run.name)} | ${formatNumber(run.durationMs)} | ${formatNumber(run.tokens)} | ${formatCurrency(run.cost)} |`,\n+    );\n+  }\n+\n+  for (const run of runs) {\n+    lines.push(\"\", `## ${run.name}`, \"\", `Transcript: \\`${run.relativePath}/opencode-export.json\\``, \"\");\n+    lines.push(\"| Tool | Calls | Time (ms) | Approx. tokens |\", \"| --- | ---: | ---: | ---: |\");\n+\n+    const toolRows = [...run.tools.entries()].sort((a, b) => b[1].durationMs - a[1].durationMs);\n+    if (toolRows.length === 0) {\n+      lines.push(\"| No tool calls | 0 | 0 | 0 |\");\n+    } else {\n+      for (const [tool, stats] of toolRows) {\n+        lines.push(\n+          `| ${escapeMarkdown(tool)} | ${formatNumber(stats.calls)} | ${formatNumber(stats.durationMs)} | ${formatNumber(Math.round(stats.allocatedTokens))} |`,\n+        );\n+      }\n+    }\n+  }\n+\n+  lines.push(\"\");\n+  return lines.join(\"\\n\");\n+}\n+\n+function escapeMarkdown(value: string) {\n+  return value.replaceAll(\"|\", \"\\\\|\");\n+}\n+\n+function formatNumber(value: number) {\n+  return new Intl.NumberFormat(\"en-US\", { maximumFractionDigits: 0 }).format(value);\n+}\n+\n+function formatCurrency(value: number) {\n+  return new Intl.NumberFormat(\"en-US\", {\n+    style: \"currency\",\n+    currency: \"USD\",\n+    minimumFractionDigits: 4,\n+    maximumFractionDigits: 6,\n+  }).format(value);\n+}\n+\n+main().catch((error: unknown) => {\n+  console.error(error instanceof Error ? error.message : error);\n+  process.exitCode = 1;\n+});\n\n",
+              "files": [
+                {
+                  "filePath": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\package.json",
+                  "relativePath": "implementation/analyze-runs/openrouter-openai-gpt-5.5-low/package.json",
+                  "type": "add",
+                  "patch": "Index: C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\package.json\n===================================================================\n--- C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\package.json\n+++ C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\package.json\n@@ -0,0 +1,14 @@\n+{\n+  \"name\": \"analyze-opencode-runs\",\n+  \"version\": \"1.0.0\",\n+  \"private\": true,\n+  \"type\": \"module\",\n+  \"scripts\": {\n+    \"analyze\": \"tsx analyze.ts\"\n+  },\n+  \"devDependencies\": {\n+    \"@types/node\": \"latest\",\n+    \"tsx\": \"latest\",\n+    \"typescript\": \"latest\"\n+  }\n+}\n",
+                  "additions": 14,
+                  "deletions": 0
+                },
+                {
+                  "filePath": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\tsconfig.json",
+                  "relativePath": "implementation/analyze-runs/openrouter-openai-gpt-5.5-low/tsconfig.json",
+                  "type": "add",
+                  "patch": "Index: C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\tsconfig.json\n===================================================================\n--- C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\tsconfig.json\n+++ C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\tsconfig.json\n@@ -0,0 +1,11 @@\n+{\n+  \"compilerOptions\": {\n+    \"target\": \"ES2022\",\n+    \"module\": \"NodeNext\",\n+    \"moduleResolution\": \"NodeNext\",\n+    \"strict\": true,\n+    \"esModuleInterop\": true,\n+    \"skipLibCheck\": true,\n+    \"types\": [\"node\"]\n+  }\n+}\n",
+                  "additions": 11,
+                  "deletions": 0
+                },
+                {
+                  "filePath": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\analyze.ts",
+                  "relativePath": "implementation/analyze-runs/openrouter-openai-gpt-5.5-low/analyze.ts",
+                  "type": "add",
+                  "patch": "Index: C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\analyze.ts\n===================================================================\n--- C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\analyze.ts\n+++ C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\analyze.ts\n@@ -0,0 +1,267 @@\n+import { existsSync } from \"node:fs\";\n+import { readdir, readFile, writeFile } from \"node:fs/promises\";\n+import path from \"node:path\";\n+import { fileURLToPath } from \"node:url\";\n+\n+type TokenCounts = {\n+  total?: number;\n+  input?: number;\n+  output?: number;\n+  reasoning?: number;\n+  cache?: {\n+    read?: number;\n+    write?: number;\n+  };\n+};\n+\n+type ToolPart = {\n+  type: \"tool\";\n+  tool?: string;\n+  state?: {\n+    time?: {\n+      start?: number;\n+      end?: number;\n+    };\n+  };\n+};\n+\n+type StepFinishPart = {\n+  type: \"step-finish\";\n+  tokens?: TokenCounts;\n+};\n+\n+type Part = ToolPart | StepFinishPart | { type?: string };\n+\n+type Transcript = {\n+  info?: {\n+    path?: string;\n+    cost?: number;\n+    tokens?: TokenCounts;\n+    time?: {\n+      created?: number;\n+      updated?: number;\n+    };\n+  };\n+  messages?: Array<{\n+    parts?: Part[];\n+  }>;\n+};\n+\n+type ToolStats = {\n+  calls: number;\n+  durationMs: number;\n+  allocatedTokens: number;\n+};\n+\n+type RunStats = {\n+  name: string;\n+  relativePath: string;\n+  transcriptPath: string;\n+  durationMs: number;\n+  tokens: number;\n+  cost: number;\n+  tools: Map<string, ToolStats>;\n+};\n+\n+const scriptDir = path.dirname(fileURLToPath(import.meta.url));\n+\n+async function main() {\n+  const repoRoot = findRepoRoot(scriptDir);\n+  const implementationDir = path.join(repoRoot, \"implementation\");\n+  const transcriptPaths = await findTranscripts(implementationDir);\n+  const runs = await Promise.all(\n+    transcriptPaths.map((transcriptPath) => analyzeTranscript(repoRoot, transcriptPath)),\n+  );\n+\n+  runs.sort((a, b) => a.relativePath.localeCompare(b.relativePath));\n+\n+  const report = buildReport(runs);\n+  const reportPath = path.join(scriptDir, \"opencode-runs-report.md\");\n+  await writeFile(reportPath, report, \"utf8\");\n+\n+  const totalTokens = runs.reduce((sum, run) => sum + run.tokens, 0);\n+  const totalCost = runs.reduce((sum, run) => sum + run.cost, 0);\n+  console.log(`Analyzed ${runs.length} runs.`);\n+  console.log(`Total tokens: ${formatNumber(totalTokens)}`);\n+  console.log(`Total cost: ${formatCurrency(totalCost)}`);\n+  console.log(`Report: ${reportPath}`);\n+}\n+\n+function findRepoRoot(startDir: string) {\n+  let current = startDir;\n+\n+  while (true) {\n+    if (existsSync(path.join(current, \"implementation\"))) {\n+      return current;\n+    }\n+\n+    const parent = path.dirname(current);\n+    if (parent === current) {\n+      throw new Error(\"Could not find a parent directory containing implementation/.\");\n+    }\n+\n+    current = parent;\n+  }\n+}\n+\n+async function findTranscripts(dir: string): Promise<string[]> {\n+  const entries = await readdir(dir, { withFileTypes: true });\n+  const results: string[] = [];\n+\n+  for (const entry of entries) {\n+    const fullPath = path.join(dir, entry.name);\n+\n+    if (entry.isDirectory()) {\n+      if (entry.name !== \"node_modules\") {\n+        results.push(...(await findTranscripts(fullPath)));\n+      }\n+    } else if (entry.isFile() && entry.name === \"opencode-export.json\") {\n+      results.push(fullPath);\n+    }\n+  }\n+\n+  return results;\n+}\n+\n+async function analyzeTranscript(repoRoot: string, transcriptPath: string): Promise<RunStats> {\n+  const transcript = JSON.parse(await readFile(transcriptPath, \"utf8\")) as Transcript;\n+  const relativePath = path.relative(repoRoot, path.dirname(transcriptPath)).replaceAll(path.sep, \"/\");\n+  const name = relativePath.replace(/^implementation\\//, \"\");\n+  const created = transcript.info?.time?.created ?? 0;\n+  const updated = transcript.info?.time?.updated ?? created;\n+  const tools = new Map<string, ToolStats>();\n+  let pendingTools: ToolPart[] = [];\n+\n+  for (const message of transcript.messages ?? []) {\n+    for (const part of message.parts ?? []) {\n+      if (part.type === \"tool\") {\n+        addToolTiming(tools, part);\n+        pendingTools.push(part);\n+      } else if (part.type === \"step-finish\") {\n+        allocateStepTokens(tools, pendingTools, part.tokens?.total ?? 0);\n+        pendingTools = [];\n+      }\n+    }\n+  }\n+\n+  return {\n+    name,\n+    relativePath,\n+    transcriptPath,\n+    durationMs: Math.max(0, updated - created),\n+    tokens: tokenTotal(transcript.info?.tokens),\n+    cost: transcript.info?.cost ?? 0,\n+    tools,\n+  };\n+}\n+\n+function addToolTiming(tools: Map<string, ToolStats>, part: ToolPart) {\n+  const name = part.tool ?? \"unknown\";\n+  const stats = getToolStats(tools, name);\n+  const start = part.state?.time?.start;\n+  const end = part.state?.time?.end;\n+\n+  stats.calls += 1;\n+  if (typeof start === \"number\" && typeof end === \"number\" && end >= start) {\n+    stats.durationMs += end - start;\n+  }\n+}\n+\n+function allocateStepTokens(tools: Map<string, ToolStats>, stepTools: ToolPart[], tokens: number) {\n+  if (stepTools.length === 0 || tokens <= 0) {\n+    return;\n+  }\n+\n+  const tokensPerTool = tokens / stepTools.length;\n+  for (const tool of stepTools) {\n+    getToolStats(tools, tool.tool ?? \"unknown\").allocatedTokens += tokensPerTool;\n+  }\n+}\n+\n+function getToolStats(tools: Map<string, ToolStats>, name: string) {\n+  const existing = tools.get(name);\n+  if (existing) {\n+    return existing;\n+  }\n+\n+  const created = { calls: 0, durationMs: 0, allocatedTokens: 0 };\n+  tools.set(name, created);\n+  return created;\n+}\n+\n+function tokenTotal(tokens: TokenCounts | undefined) {\n+  if (!tokens) {\n+    return 0;\n+  }\n+\n+  return (\n+    (tokens.total ?? 0) ||\n+    (tokens.input ?? 0) +\n+      (tokens.output ?? 0) +\n+      (tokens.reasoning ?? 0) +\n+      (tokens.cache?.read ?? 0) +\n+      (tokens.cache?.write ?? 0)\n+  );\n+}\n+\n+function buildReport(runs: RunStats[]) {\n+  const lines = [\n+    \"# OpenCode Runs Report\",\n+    \"\",\n+    `Generated: ${new Date().toISOString()}`,\n+    \"\",\n+    \"Tool token counts are approximate. OpenCode records tokens per step, not per tool call, so each step's `tokens.total` was split evenly across the tool calls in that step.\",\n+    \"\",\n+    \"## Summary\",\n+    \"\",\n+    \"| Run | Duration (ms) | Tokens | Cost |\",\n+    \"| --- | ---: | ---: | ---: |\",\n+  ];\n+\n+  for (const run of runs) {\n+    lines.push(\n+      `| ${escapeMarkdown(run.name)} | ${formatNumber(run.durationMs)} | ${formatNumber(run.tokens)} | ${formatCurrency(run.cost)} |`,\n+    );\n+  }\n+\n+  for (const run of runs) {\n+    lines.push(\"\", `## ${run.name}`, \"\", `Transcript: \\`${run.relativePath}/opencode-export.json\\``, \"\");\n+    lines.push(\"| Tool | Calls | Time (ms) | Approx. tokens |\", \"| --- | ---: | ---: | ---: |\");\n+\n+    const toolRows = [...run.tools.entries()].sort((a, b) => b[1].durationMs - a[1].durationMs);\n+    if (toolRows.length === 0) {\n+      lines.push(\"| No tool calls | 0 | 0 | 0 |\");\n+    } else {\n+      for (const [tool, stats] of toolRows) {\n+        lines.push(\n+          `| ${escapeMarkdown(tool)} | ${formatNumber(stats.calls)} | ${formatNumber(stats.durationMs)} | ${formatNumber(Math.round(stats.allocatedTokens))} |`,\n+        );\n+      }\n+    }\n+  }\n+\n+  lines.push(\"\");\n+  return lines.join(\"\\n\");\n+}\n+\n+function escapeMarkdown(value: string) {\n+  return value.replaceAll(\"|\", \"\\\\|\");\n+}\n+\n+function formatNumber(value: number) {\n+  return new Intl.NumberFormat(\"en-US\", { maximumFractionDigits: 0 }).format(value);\n+}\n+\n+function formatCurrency(value: number) {\n+  return new Intl.NumberFormat(\"en-US\", {\n+    style: \"currency\",\n+    currency: \"USD\",\n+    minimumFractionDigits: 4,\n+    maximumFractionDigits: 6,\n+  }).format(value);\n+}\n+\n+main().catch((error: unknown) => {\n+  console.error(error instanceof Error ? error.message : error);\n+  process.exitCode = 1;\n+});\n",
+                  "additions": 267,
+                  "deletions": 0
+                }
+              ],
+              "diagnostics": {},
+              "truncated": false
+            },
+            "title": "Success. Updated the following files:\nA implementation/analyze-runs/openrouter-openai-gpt-5.5-low/package.json\nA implementation/analyze-runs/openrouter-openai-gpt-5.5-low/tsconfig.json\nA implementation/analyze-runs/openrouter-openai-gpt-5.5-low/analyze.ts",
+            "time": {
+              "start": 1779269037156,
+              "end": 1779269037175
+            }
+          },
+          "metadata": {
+            "openrouter": {
+              "reasoning_details": []
+            }
+          },
+          "id": "prt_e44b27e99001S4eBlOkhWVk2Tz",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b26760001hcI6bn2fifK9BT"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-finish",
+          "tokens": {
+            "total": 18496,
+            "input": 15746,
+            "output": 2750,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0.16123,
+          "id": "prt_e44b2f00a001NVmJOdKDXmHk4D",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b26760001hcI6bn2fifK9BT"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_e44af181a001kN97J4PttQGFm9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "low",
+        "path": {
+          "cwd": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+          "root": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison"
+        },
+        "cost": 0.02742,
+        "tokens": {
+          "total": 18918,
+          "input": 3480,
+          "output": 78,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 15360
+          }
+        },
+        "modelID": "openai/gpt-5.5",
+        "providerID": "openrouter",
+        "time": {
+          "created": 1779269038940,
+          "completed": 1779269043989
+        },
+        "finish": "tool-calls",
+        "id": "msg_e44b2f35c001zb1ubbr9PMzLwy",
+        "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H"
+      },
+      "parts": [
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b2fb7e0016oBFqhrZ5mGlva",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b2f35c001zb1ubbr9PMzLwy"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_nHmOMOcrjql2MgN3lkwk62HP",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "Create analyze.ts, package.json, and tsconfig.json in current folder",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run analyzer with tsx",
+                  "status": "in_progress",
+                  "priority": "high"
+                },
+                {
+                  "content": "Verify report and console output",
+                  "status": "pending",
+                  "priority": "medium"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"Create analyze.ts, package.json, and tsconfig.json in current folder\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Run analyzer with tsx\",\n    \"status\": \"in_progress\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Verify report and console output\",\n    \"status\": \"pending\",\n    \"priority\": \"medium\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "Create analyze.ts, package.json, and tsconfig.json in current folder",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run analyzer with tsx",
+                  "status": "in_progress",
+                  "priority": "high"
+                },
+                {
+                  "content": "Verify report and console output",
+                  "status": "pending",
+                  "priority": "medium"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "2 todos",
+            "time": {
+              "start": 1779269042179,
+              "end": 1779269042184
+            }
+          },
+          "metadata": {
+            "openrouter": {
+              "reasoning_details": []
+            }
+          },
+          "id": "prt_e44b2fb81001fQ2rkUY6w2Wy7Q",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b2f35c001zb1ubbr9PMzLwy"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-finish",
+          "tokens": {
+            "total": 18918,
+            "input": 3480,
+            "output": 78,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 15360
+            }
+          },
+          "cost": 0.02742,
+          "id": "prt_e44b303fa0016ZXVIvNuSBBEGt",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b2f35c001zb1ubbr9PMzLwy"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_e44af181a001kN97J4PttQGFm9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "low",
+        "path": {
+          "cwd": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+          "root": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison"
+        },
+        "cost": 0.09878,
+        "tokens": {
+          "total": 19151,
+          "input": 19030,
+          "output": 121,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "openai/gpt-5.5",
+        "providerID": "openrouter",
+        "time": {
+          "created": 1779269043995,
+          "completed": 1779269052863
+        },
+        "finish": "tool-calls",
+        "id": "msg_e44b3071b001Y59Rz84MRoM3sN",
+        "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H"
+      },
+      "parts": [
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b30f6c0013ZIUgOAIfIrQJQ",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b3071b001Y59Rz84MRoM3sN"
+        },
+        {
+          "type": "text",
+          "text": "The three requested files are in place. I’m running the analyzer now with `tsx`; this may install/use `tsx` from the package setup if it is not already available.",
+          "time": {
+            "start": 1779269046126,
+            "end": 1779269049244
+          },
+          "id": "prt_e44b30f6e001QpM4nM6n55eNbi",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b3071b001Y59Rz84MRoM3sN"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_rFQdRx3qT1G415OimJP6iScM",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "npx tsx analyze.ts",
+              "timeout": 120000,
+              "workdir": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+              "description": "Runs TypeScript analyzer with tsx"
+            },
+            "output": "npm warn Unknown user config \"email\". This will stop working in the next major version of npm.\nAnalyzed 7 runs.\nTotal tokens: 8,308,352\nTotal cost: $10.247293\nReport: C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\opencode-runs-report.md\n",
+            "metadata": {
+              "output": "npm warn Unknown user config \"email\". This will stop working in the next major version of npm.\nAnalyzed 7 runs.\nTotal tokens: 8,308,352\nTotal cost: $10.247293\nReport: C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\opencode-runs-report.md\n",
+              "exit": 0,
+              "description": "Runs TypeScript analyzer with tsx",
+              "truncated": false
+            },
+            "title": "Runs TypeScript analyzer with tsx",
+            "time": {
+              "start": 1779269050838,
+              "end": 1779269050897
+            }
+          },
+          "metadata": {
+            "openrouter": {
+              "reasoning_details": []
+            }
+          },
+          "id": "prt_e44b315ae001EcEmC9iDwptC6T",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b3071b001Y59Rz84MRoM3sN"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-finish",
+          "tokens": {
+            "total": 19151,
+            "input": 19030,
+            "output": 121,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0.09878,
+          "id": "prt_e44b32602001FLr6TFcZg9RhfP",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b3071b001Y59Rz84MRoM3sN"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_e44af181a001kN97J4PttQGFm9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "low",
+        "path": {
+          "cwd": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+          "root": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison"
+        },
+        "cost": 0.031741,
+        "tokens": {
+          "total": 19483,
+          "input": 3381,
+          "output": 178,
+          "reasoning": 52,
+          "cache": {
+            "write": 0,
+            "read": 15872
+          }
+        },
+        "modelID": "openai/gpt-5.5",
+        "providerID": "openrouter",
+        "time": {
+          "created": 1779269052873,
+          "completed": 1779269061671
+        },
+        "finish": "tool-calls",
+        "id": "msg_e44b329c9001frHE7hufm4rkVA",
+        "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H"
+      },
+      "parts": [
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b33c800017xvo3pzbgUGgZS",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b329c9001frHE7hufm4rkVA"
+        },
+        {
+          "type": "reasoning",
+          "text": "**Verifying project status**\n\nI’m looking at a report that mentions 7 runs, but I’m wondering if that includes the current one or if it's generated. I also see there's something called opencode-export in the current setup, but initially, there were no files. Should I check if node_modules are included? It might also be important to confirm if there's a package-lock. I need to get a clear status based on this report.",
+          "time": {
+            "start": 1779269057667,
+            "end": 1779269059831
+          },
+          "metadata": {
+            "openrouter": {
+              "reasoning_details": [
+                {
+                  "type": "reasoning.summary",
+                  "summary": "**Verifying project status**\n\nI",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "’m",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " looking",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " at",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " a",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " report",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " that",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " mentions",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " 7",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " runs",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ",",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " but",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " I",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "’m",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " wondering",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " if",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " that",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " includes",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " the",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " current",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " one",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " or",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " if",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " it's",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " generated",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ".",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " I",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " also",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " see",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " there's",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " something",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " called",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " op",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "encode",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "-export",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " in",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " the",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " current",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " setup",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ",",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " but",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " initially",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ",",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " there",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " were",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " no",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " files",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ".",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " Should",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " I",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " check",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " if",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " node",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "_modules",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " are",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " included",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "?",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " It",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " might",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " also",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " be",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " important",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " to",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " confirm",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " if",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " there's",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " a",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " package",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "-lock",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ".",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " I",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " need",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " to",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " get",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " a",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " clear",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " status",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " based",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " on",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " this",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " report",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ".",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.encrypted",
+                  "data": "gAAAAABqDX3DPfLjT_PdnBtrA47udgU1TQkihnvMCozXdKeMXDZh5GQ--g5k4NCefctJfUMLYDyHaTkXxqnWhykh6hSaK7isoAve4A_fb2eMNvouAkReJJMgQomJhtYkCO6tT5bLXfUzvmDgHNRF8ltsQbW5vqTPHo0MbiecDkbjv3_xO3x6cDid-gkohxTvCfGKvI-bZrsE7rqQqHjb6aO3pAg-mrqIpFDIiFApBw7cw2ArgIyWRwDf_9nsdJ_EoVHOpuaF-Hifi3ScSqTJR8wZHvuOh5TG3H2hdn1e7c3qJU-oxC_XZzoS8rYr5XhcgZ_TKfiIIUYN_zNkckNJ3n-bTslUMQpj36zbYuBqA9raafUIsJZevKd3NLXiaBmVkfPVgvqp2q9yeAQnD4Eyt4CymrSs-dy9pth0B5XXoPjAVOcQRZzCpG6YDqe1Li0AbeymbaKGLGsHTBQ9Gqz8lgHIFQyRAehmWBRIls682kfoYbApTkOUJZ1FqLULQlOLlsPkXf_ke423n-XQnNm4ZGhA6Zs0V1AkX0EJJ8s5qV04F1oacwcCujI4RyZ9aGvNQFL1BhEXiQBVPIYjAmezspP8_gePQjQ4Zcghbs8WJ8G7WundQWzEmI0O1B2pXjlCBPkMcHsUP6t0WJw-3PMfI3LQ2QVEkBXnP_op0e8WuGdwfUd6h6EsWvHodf4jFVv8iJWyA3YlPJuLk9ALwJQlH00kpF6LQG4O6xh7-GsPOOSOdkLRMmnvz-LNpVY8EUmRgzaM8gaFeabMXlBPSdLijNwVZRao_WAGcrzc-oAN3GH0QIMKibBbLR4cJ5iJgwzANa0tBndfTagkZs7dVOKqVplXVMfvK6goqVSYYdyJo_bQU7F4uZLvc6mzzvU68ARv9BRhCQziSek_GRea3jakTQNtGyuGlnK79hiA_77V7koJLwCKcbMq3FbZwWUTv0CzSxNI5iPb6oe6GnLkgLmxCLBYEYvLTVcfCpbHKJauzN-_8iph8mMS8llP-0jBBEpCBPMpnNn-d_p1Op7AXBczi347Iq92eQ0XAAtOIeknt-0LjG_qz3dVvS06IVmvK3HnqnYP0hE92ZMZGim1gqamuVK57ac2RpT93IjaAVjncN9HDnT6uJc9M0XHoj__MgxkFPrgzCR4Q4eY4I3fCuUzR4EQiTTjUvRseUt6Wal-xWGiz0FfPNFx8VNujgxXVBzs8kGdOG9LLMDv",
+                  "id": "rs_04fe2ffdf0e47caf016a0d7dbfba2c8195bbf6149217aaa288",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                }
+              ]
+            }
+          },
+          "id": "prt_e44b33c83001GAszCiUX5o1TXX",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b329c9001frHE7hufm4rkVA"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_nwlUzvQQmx0rFGuRui1QMIHU",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\opencode-runs-report.md",
+              "offset": 1,
+              "limit": 120
+            },
+            "output": "<path>C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\opencode-runs-report.md</path>\n<type>file</type>\n<content>\n1: # OpenCode Runs Report\n2: \n3: Generated: 2026-05-20T09:24:10.802Z\n4: \n5: Tool token counts are approximate. OpenCode records tokens per step, not per tool call, so each step's `tokens.total` was split evenly across the tool calls in that step.\n6: \n7: ## Summary\n8: \n9: | Run | Duration (ms) | Tokens | Cost |\n10: | --- | ---: | ---: | ---: |\n11: | analyze-runs/openrouter-mistralai-devstral-2512 | 348,443 | 1,019,395 | $0.164874 |\n12: | analyze-runs/openrouter-mistralai-mistral-medium-3-5 | 649,939 | 2,755,813 | $3.985142 |\n13: | analyze-runs/openrouter-moonshotai-kimi-k2.6 | 481,941 | 137,879 | $0.113972 |\n14: | analyze-runs/openrouter-openai-gpt-5.5-high | 220,352 | 484,995 | $0.688873 |\n15: | analyze-runs/openrouter-openai-gpt-5.5-medium | 113,960 | 174,199 | $0.440915 |\n16: | nextjs-app/openrouter-openai-gpt-5.5-high | 873,000 | 2,054,374 | $2.83041 |\n17: | nextjs-app/openrouter-openai-gpt-5.5-medium | 790,461 | 1,681,697 | $2.023108 |\n18: \n19: ## analyze-runs/openrouter-mistralai-devstral-2512\n20: \n21: Transcript: `implementation/analyze-runs/openrouter-mistralai-devstral-2512/opencode-export.json`\n22: \n23: | Tool | Calls | Time (ms) | Approx. tokens |\n24: | --- | ---: | ---: | ---: |\n25: | bash | 12 | 780 | 221,193 |\n26: | read | 13 | 346 | 347,756 |\n27: | grep | 2 | 209 | 37,479 |\n28: | edit | 11 | 77 | 298,451 |\n29: | write | 4 | 66 | 73,355 |\n30: \n31: ## analyze-runs/openrouter-mistralai-mistral-medium-3-5\n32: \n33: Transcript: `implementation/analyze-runs/openrouter-mistralai-mistral-medium-3-5/opencode-export.json`\n34: \n35: | Tool | Calls | Time (ms) | Approx. tokens |\n36: | --- | ---: | ---: | ---: |\n37: | bash | 18 | 763 | 851,537 |\n38: | read | 16 | 347 | 721,789 |\n39: | glob | 2 | 282 | 10,255 |\n40: | grep | 2 | 150 | 91,868 |\n41: | write | 4 | 84 | 127,174 |\n42: | edit | 14 | 68 | 740,480 |\n43: | todowrite | 4 | 22 | 147,949 |\n44: \n45: ## analyze-runs/openrouter-moonshotai-kimi-k2.6\n46: \n47: Transcript: `implementation/analyze-runs/openrouter-moonshotai-kimi-k2.6/opencode-export.json`\n48: \n49: | Tool | Calls | Time (ms) | Approx. tokens |\n50: | --- | ---: | ---: | ---: |\n51: | bash | 5 | 168 | 56,708 |\n52: | glob | 1 | 95 | 9,210 |\n53: | write | 3 | 47 | 19,986 |\n54: | read | 2 | 30 | 16,914 |\n55: | todowrite | 2 | 10 | 12,437 |\n56: \n57: ## analyze-runs/openrouter-openai-gpt-5.5-high\n58: \n59: Transcript: `implementation/analyze-runs/openrouter-openai-gpt-5.5-high/opencode-export.json`\n60: \n61: | Tool | Calls | Time (ms) | Approx. tokens |\n62: | --- | ---: | ---: | ---: |\n63: | read | 8 | 826 | 155,907 |\n64: | bash | 5 | 565 | 108,076 |\n65: | grep | 3 | 490 | 15,745 |\n66: | glob | 3 | 266 | 43,518 |\n67: | apply_patch | 2 | 50 | 59,559 |\n68: | todowrite | 3 | 20 | 66,584 |\n69: \n70: ## analyze-runs/openrouter-openai-gpt-5.5-medium\n71: \n72: Transcript: `implementation/analyze-runs/openrouter-openai-gpt-5.5-medium/opencode-export.json`\n73: \n74: | Tool | Calls | Time (ms) | Approx. tokens |\n75: | --- | ---: | ---: | ---: |\n76: | read | 4 | 157 | 33,715 |\n77: | grep | 1 | 96 | 11,420 |\n78: | glob | 2 | 87 | 12,862 |\n79: | bash | 2 | 87 | 35,437 |\n80: | apply_patch | 1 | 28 | 16,306 |\n81: | todowrite | 3 | 17 | 44,553 |\n82: \n83: ## nextjs-app/openrouter-openai-gpt-5.5-high\n84: \n85: Transcript: `implementation/nextjs-app/openrouter-openai-gpt-5.5-high/opencode-export.json`\n86: \n87: | Tool | Calls | Time (ms) | Approx. tokens |\n88: | --- | ---: | ---: | ---: |\n89: | bash | 32 | 16,341 | 986,133 |\n90: | grep | 6 | 583 | 206,226 |\n91: | glob | 5 | 458 | 68,875 |\n92: | read | 17 | 270 | 386,398 |\n93: | apply_patch | 8 | 186 | 272,802 |\n94: | skill | 1 | 82 | 9,055 |\n95: | todowrite | 5 | 27 | 124,885 |\n96: \n97: ## nextjs-app/openrouter-openai-gpt-5.5-medium\n98: \n99: Transcript: `implementation/nextjs-app/openrouter-openai-gpt-5.5-medium/opencode-export.json`\n100: \n101: | Tool | Calls | Time (ms) | Approx. tokens |\n102: | --- | ---: | ---: | ---: |\n103: | bash | 30 | 11,868 | 889,940 |\n104: | glob | 5 | 478 | 68,085 |\n105: | grep | 2 | 390 | 72,003 |\n106: | read | 11 | 186 | 295,691 |\n107: | apply_patch | 6 | 163 | 187,794 |\n108: | skill | 1 | 58 | 9,553 |\n109: | todowrite | 5 | 33 | 113,138 |\n\n(End of file - total 109 lines)\n</content>",
+            "metadata": {
+              "preview": "# OpenCode Runs Report\n\nGenerated: 2026-05-20T09:24:10.802Z\n\nTool token counts are approximate. OpenCode records tokens per step, not per tool call, so each step's `tokens.total` was split evenly across the tool calls in that step.\n\n## Summary\n\n| Run | Duration (ms) | Tokens | Cost |\n| --- | ---: | ---: | ---: |\n| analyze-runs/openrouter-mistralai-devstral-2512 | 348,443 | 1,019,395 | $0.164874 |\n| analyze-runs/openrouter-mistralai-mistral-medium-3-5 | 649,939 | 2,755,813 | $3.985142 |\n| analyze-runs/openrouter-moonshotai-kimi-k2.6 | 481,941 | 137,879 | $0.113972 |\n| analyze-runs/openrouter-openai-gpt-5.5-high | 220,352 | 484,995 | $0.688873 |\n| analyze-runs/openrouter-openai-gpt-5.5-medium | 113,960 | 174,199 | $0.440915 |\n| nextjs-app/openrouter-openai-gpt-5.5-high | 873,000 | 2,054,374 | $2.83041 |\n| nextjs-app/openrouter-openai-gpt-5.5-medium | 790,461 | 1,681,697 | $2.023108 |\n\n## analyze-runs/openrouter-mistralai-devstral-2512\n",
+              "truncated": false,
+              "loaded": []
+            },
+            "title": "implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\opencode-runs-report.md",
+            "time": {
+              "start": 1779269059733,
+              "end": 1779269059791
+            }
+          },
+          "metadata": {
+            "openrouter": {
+              "reasoning_details": [
+                {
+                  "type": "reasoning.summary",
+                  "summary": "**Verifying project status**\n\nI",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "’m",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " looking",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " at",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " a",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " report",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " that",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " mentions",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " 7",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " runs",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ",",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " but",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " I",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "’m",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " wondering",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " if",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " that",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " includes",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " the",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " current",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " one",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " or",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " if",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " it's",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " generated",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ".",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " I",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " also",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " see",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " there's",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " something",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " called",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " op",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "encode",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "-export",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " in",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " the",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " current",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " setup",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ",",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " but",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " initially",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ",",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " there",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " were",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " no",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " files",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ".",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " Should",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " I",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " check",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " if",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " node",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "_modules",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " are",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " included",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "?",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " It",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " might",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " also",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " be",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " important",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " to",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " confirm",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " if",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " there's",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " a",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " package",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": "-lock",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ".",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " I",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " need",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " to",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " get",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " a",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " clear",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " status",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " based",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " on",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " this",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": " report",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.summary",
+                  "summary": ".",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.encrypted",
+                  "data": "gAAAAABqDX3DPfLjT_PdnBtrA47udgU1TQkihnvMCozXdKeMXDZh5GQ--g5k4NCefctJfUMLYDyHaTkXxqnWhykh6hSaK7isoAve4A_fb2eMNvouAkReJJMgQomJhtYkCO6tT5bLXfUzvmDgHNRF8ltsQbW5vqTPHo0MbiecDkbjv3_xO3x6cDid-gkohxTvCfGKvI-bZrsE7rqQqHjb6aO3pAg-mrqIpFDIiFApBw7cw2ArgIyWRwDf_9nsdJ_EoVHOpuaF-Hifi3ScSqTJR8wZHvuOh5TG3H2hdn1e7c3qJU-oxC_XZzoS8rYr5XhcgZ_TKfiIIUYN_zNkckNJ3n-bTslUMQpj36zbYuBqA9raafUIsJZevKd3NLXiaBmVkfPVgvqp2q9yeAQnD4Eyt4CymrSs-dy9pth0B5XXoPjAVOcQRZzCpG6YDqe1Li0AbeymbaKGLGsHTBQ9Gqz8lgHIFQyRAehmWBRIls682kfoYbApTkOUJZ1FqLULQlOLlsPkXf_ke423n-XQnNm4ZGhA6Zs0V1AkX0EJJ8s5qV04F1oacwcCujI4RyZ9aGvNQFL1BhEXiQBVPIYjAmezspP8_gePQjQ4Zcghbs8WJ8G7WundQWzEmI0O1B2pXjlCBPkMcHsUP6t0WJw-3PMfI3LQ2QVEkBXnP_op0e8WuGdwfUd6h6EsWvHodf4jFVv8iJWyA3YlPJuLk9ALwJQlH00kpF6LQG4O6xh7-GsPOOSOdkLRMmnvz-LNpVY8EUmRgzaM8gaFeabMXlBPSdLijNwVZRao_WAGcrzc-oAN3GH0QIMKibBbLR4cJ5iJgwzANa0tBndfTagkZs7dVOKqVplXVMfvK6goqVSYYdyJo_bQU7F4uZLvc6mzzvU68ARv9BRhCQziSek_GRea3jakTQNtGyuGlnK79hiA_77V7koJLwCKcbMq3FbZwWUTv0CzSxNI5iPb6oe6GnLkgLmxCLBYEYvLTVcfCpbHKJauzN-_8iph8mMS8llP-0jBBEpCBPMpnNn-d_p1Op7AXBczi347Iq92eQ0XAAtOIeknt-0LjG_qz3dVvS06IVmvK3HnqnYP0hE92ZMZGim1gqamuVK57ac2RpT93IjaAVjncN9HDnT6uJc9M0XHoj__MgxkFPrgzCR4Q4eY4I3fCuUzR4EQiTTjUvRseUt6Wal-xWGiz0FfPNFx8VNujgxXVBzs8kGdOG9LLMDv",
+                  "id": "rs_04fe2ffdf0e47caf016a0d7dbfba2c8195bbf6149217aaa288",
+                  "format": "azure-openai-responses-v1",
+                  "index": 0
+                }
+              ]
+            }
+          },
+          "id": "prt_e44b3448b001bF7j3WCXrU6Kh8",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b329c9001frHE7hufm4rkVA"
+        },
+        {
+          "type": "tool",
+          "tool": "glob",
+          "callID": "call_7RlKMu2fzXtYBQY880lTeX4B",
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "*",
+              "path": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low"
+            },
+            "output": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\opencode-runs-report.md\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\analyze.ts\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\tsconfig.json\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\package.json",
+            "metadata": {
+              "count": 4,
+              "truncated": false
+            },
+            "title": "implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+            "time": {
+              "start": 1779269059743,
+              "end": 1779269059882
+            }
+          },
+          "id": "prt_e44b34498001XkVn0Asehc36eO",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b329c9001frHE7hufm4rkVA"
+        },
+        {
+          "type": "tool",
+          "tool": "glob",
+          "callID": "call_vPrGnaLvJVnOr4anMEaPqMH6",
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "**/opencode-export.json",
+              "path": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation"
+            },
+            "output": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-mistralai-devstral-2512\\opencode-export.json\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-mistralai-mistral-medium-3-5\\opencode-export.json\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-moonshotai-kimi-k2.6\\opencode-export.json\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-medium\\opencode-export.json\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-high\\opencode-export.json\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\nextjs-app\\openrouter-openai-gpt-5.5-medium\\opencode-export.json\nC:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\nextjs-app\\openrouter-openai-gpt-5.5-high\\opencode-export.json",
+            "metadata": {
+              "count": 7,
+              "truncated": false
+            },
+            "title": "implementation",
+            "time": {
+              "start": 1779269059753,
+              "end": 1779269059846
+            }
+          },
+          "id": "prt_e44b344a2001p0zQVDIgLOzzfp",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b329c9001frHE7hufm4rkVA"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-finish",
+          "tokens": {
+            "total": 19483,
+            "input": 3381,
+            "output": 178,
+            "reasoning": 52,
+            "cache": {
+              "write": 0,
+              "read": 15872
+            }
+          },
+          "cost": 0.031741,
+          "id": "prt_e44b34851001JdYf7nH3rOIy2H",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b329c9001frHE7hufm4rkVA"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_e44af181a001kN97J4PttQGFm9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "low",
+        "path": {
+          "cwd": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+          "root": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison"
+        },
+        "cost": 0.04008,
+        "tokens": {
+          "total": 21455,
+          "input": 6018,
+          "output": 77,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 15360
+          }
+        },
+        "modelID": "openai/gpt-5.5",
+        "providerID": "openrouter",
+        "time": {
+          "created": 1779269061679,
+          "completed": 1779269071101
+        },
+        "finish": "tool-calls",
+        "id": "msg_e44b34c2f0014abAKiqh5aGCV8",
+        "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H"
+      },
+      "parts": [
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b356c8001KrdEmWE9zYDdMe",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b34c2f0014abAKiqh5aGCV8"
+        },
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b3656b001XFzNkDdHPlFkgb",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b34c2f0014abAKiqh5aGCV8"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_ZRrGHGBrb0BI3qZNH8rQtYlu",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "Create analyze.ts, package.json, and tsconfig.json in current folder",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run analyzer with tsx",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Verify report and console output",
+                  "status": "completed",
+                  "priority": "medium"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"Create analyze.ts, package.json, and tsconfig.json in current folder\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Run analyzer with tsx\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Verify report and console output\",\n    \"status\": \"completed\",\n    \"priority\": \"medium\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "Create analyze.ts, package.json, and tsconfig.json in current folder",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run analyzer with tsx",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Verify report and console output",
+                  "status": "completed",
+                  "priority": "medium"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "0 todos",
+            "time": {
+              "start": 1779269069053,
+              "end": 1779269069060
+            }
+          },
+          "metadata": {
+            "openrouter": {
+              "reasoning_details": []
+            }
+          },
+          "id": "prt_e44b3656e001WQGOA4X2HYETyt",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b34c2f0014abAKiqh5aGCV8"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-finish",
+          "tokens": {
+            "total": 21455,
+            "input": 6018,
+            "output": 77,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 15360
+            }
+          },
+          "cost": 0.04008,
+          "id": "prt_e44b36c8f001dkho81HqIq06R2",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b34c2f0014abAKiqh5aGCV8"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_e44af181a001kN97J4PttQGFm9",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "low",
+        "path": {
+          "cwd": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low",
+          "root": "C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison"
+        },
+        "cost": 0.11422,
+        "tokens": {
+          "total": 21779,
+          "input": 21566,
+          "output": 213,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 0
+          }
+        },
+        "modelID": "openai/gpt-5.5",
+        "providerID": "openrouter",
+        "time": {
+          "created": 1779269071114,
+          "completed": 1779269077204
+        },
+        "finish": "stop",
+        "id": "msg_e44b3710a001WQFsZawY1A25Yx",
+        "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H"
+      },
+      "parts": [
+        {
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-start",
+          "id": "prt_e44b3792f0019Bp1N4GbFhjEe8",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b3710a001WQFsZawY1A25Yx"
+        },
+        {
+          "type": "text",
+          "text": "Implemented and ran the analyzer.\n\nCreated in the current folder:\n\n- `analyze.ts`\n- `package.json`\n- `tsconfig.json`\n- Generated report: `opencode-runs-report.md`\n\nRun command used:\n\n```bash\nnpx tsx analyze.ts\n```\n\nConsole summary:\n\n```text\nAnalyzed 7 runs.\nTotal tokens: 8,308,352\nTotal cost: $10.247293\nReport: C:\\Users\\KarinHuber\\source\\repos\\ai-agent-comparison\\implementation\\analyze-runs\\openrouter-openai-gpt-5.5-low\\opencode-runs-report.md\n```\n\nNotes:\n\n- The script finds the repo root by walking upward until it finds `implementation/`.\n- It recursively finds `opencode-export.json` under `implementation/`, skipping `node_modules`.\n- It writes only to the script folder.\n- Per-tool token counts are marked as approximate in the report because step tokens are evenly split across tool calls in each step.",
+          "time": {
+            "start": 1779269073203,
+            "end": 1779269075708
+          },
+          "id": "prt_e44b37933001WLRLBBL2R1hZHY",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b3710a001WQFsZawY1A25Yx"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+          "type": "step-finish",
+          "tokens": {
+            "total": 21779,
+            "input": 21566,
+            "output": 213,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 0
+            }
+          },
+          "cost": 0.11422,
+          "id": "prt_e44b385fe0015K71m1h2NHRwit",
+          "sessionID": "ses_1bb50e837ffeqjWU7u8wuMx07H",
+          "messageID": "msg_e44b3710a001WQFsZawY1A25Yx"
+        }
+      ]
+    }
+  ]
+}

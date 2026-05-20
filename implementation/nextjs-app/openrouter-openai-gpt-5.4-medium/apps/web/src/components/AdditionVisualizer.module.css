@@ -1,0 +1,99 @@
+.shell {
+  display: grid;
+  min-height: 100vh;
+  padding: 2rem;
+  place-items: center;
+}
+
+.card {
+  width: min(100%, 48rem);
+  padding: 2rem;
+  border: 1px solid #d9e0ea;
+  border-radius: 1.5rem;
+  background: linear-gradient(180deg, #ffffff 0%, #edf4ff 100%);
+  box-shadow: 0 1.5rem 4rem rgba(22, 32, 51, 0.12);
+}
+
+.eyebrow {
+  margin: 0;
+  color: #4f6b95;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0.75rem 0 0;
+  font-size: clamp(2rem, 3vw, 3rem);
+}
+
+.copy {
+  margin: 1rem 0 0;
+  max-width: 42rem;
+  color: #44516a;
+  line-height: 1.6;
+}
+
+.formGrid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.field input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid #bfd0e4;
+  border-radius: 0.9rem;
+  background: #ffffff;
+}
+
+.visualizer {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+.statCard,
+.resultCard {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.statCard strong,
+.resultCard strong {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.resultCard {
+  background: #162033;
+  color: #f8fbff;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 48rem) {
+  .formGrid,
+  .visualizer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .resultCard {
+    grid-column: 1 / -1;
+  }
+}

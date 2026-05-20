@@ -1,0 +1,29 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.15/schema.json",
+  "files": {
+    "include": ["**/*.{js,jsx,ts,tsx,json,jsonc}"]
+  },
+  "OrganizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "rules": {
+      "recommended": true
+    }
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEndings": "lf"
+  },
+  "javascript": {
+    "formatter": {
+      "jsxBracketSameLine": false
+    }
+  },
+  "typescript": {
+    "formatter": {
+      "jsxBracketSameLine": false
+    }
+  }
+}

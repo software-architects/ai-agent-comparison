@@ -1,0 +1,13 @@
+{
+  "name": "opencode-run-analysis",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "analyze": "tsx analyze.ts"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}

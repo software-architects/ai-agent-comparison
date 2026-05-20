@@ -1,0 +1,31 @@
+{
+  "name": "ai-agent-comparison",
+  "version": "1.0.0",
+  "description": "Next.js application skeleton with shared library",
+  "private": true,
+  "scripts": {
+    "lint": "biome lint",
+    "lint:fix": "biome lint --write",
+    "format": "biome format",
+    "format:write": "biome format --write",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "e2e": "pnpm --filter web e2e",
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm -r build"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.1.3",
+      "onFail": "download"
+    }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.15"
+  }
+}
