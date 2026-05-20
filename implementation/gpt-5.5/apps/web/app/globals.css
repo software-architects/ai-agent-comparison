@@ -1,0 +1,37 @@
+:root {
+  color: #172033;
+  background: #f5efe6;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  align-items: center;
+  display: flex;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.hero {
+  background: #fffaf3;
+  border: 2px solid #172033;
+  border-radius: 1.5rem;
+  box-shadow: 0.75rem 0.75rem 0 #172033;
+  margin: 0 auto;
+  max-width: 48rem;
+  padding: clamp(1.5rem, 5vw, 4rem);
+}
+
+h1 {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  letter-spacing: -0.08em;
+  line-height: 0.9;
+  margin: 0 0 2rem;
+}

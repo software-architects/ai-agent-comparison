@@ -1,0 +1,18 @@
+{
+  "name": "add-demo",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm --filter @add-demo/lib test",
+    "e2e": "pnpm --filter @add-demo/web e2e",
+    "dev": "pnpm --filter @add-demo/web dev"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.15",
+    "typescript": "6.0.3"
+  },
+  "packageManager": "pnpm@11.1.2"
+}
