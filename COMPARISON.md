@@ -32,7 +32,7 @@ algorithmic bug in one task and a non-functional project skeleton in another).
 top-quality OpenAI runs were also among the fastest and most economical (≈$1.50–$4.60 of API spend
 per model across all three tasks). By contrast, the lower-quality runs were often the expensive
 ones: `mistral-medium-3-5` cost the most (~$9.79) while finishing mid-pack on quality, and
-`kimi-k2.6` spent ~74 minutes and 20M+ tokens on a single task. Cheapest is not safest either —
+`kimi-k2.6` spent \~74 minutes and 20M+ tokens on a single task. Cheapest is not safest either —
 `devstral-2512` was the least expensive (~$0.46) but produced the lowest-quality output.
 
 **Bottom line:** for this style of work, the OpenAI `gpt-5.4`/`gpt-5.5` family offers the best
