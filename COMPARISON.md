@@ -18,6 +18,32 @@ read, not executed).
 
 ---
 
+## Executive summary
+
+Across all three tasks, **OpenAI's models clearly led the field.** `gpt-5.5-high` and
+`gpt-5.4-high` delivered essentially flawless work on every task (top grade throughout), with
+`gpt-5.4-medium`, `gpt-5.5-medium`, and `gpt-5.5-low` close behind. **`kimi-k2.6` was the strongest
+non-OpenAI model** — consistently solid and the most thorough on two of the three tasks. The
+**Mistral models trailed**: `mistral-medium-3-5` repeatedly missed hard requirements, and
+`devstral-2512` was the weakest overall, the only model to ship a genuinely broken result (an
+algorithmic bug in one task and a non-functional project skeleton in another).
+
+**Quality, speed, and cost did not move together**, which matters for tool selection. The
+top-quality OpenAI runs were also among the fastest and most economical (≈$1.50–$4.60 of API spend
+per model across all three tasks). By contrast, the lower-quality runs were often the expensive
+ones: `mistral-medium-3-5` cost the most (~$9.79) while finishing mid-pack on quality, and
+`kimi-k2.6` spent ~74 minutes and 20M+ tokens on a single task. Cheapest is not safest either —
+`devstral-2512` was the least expensive (~$0.46) but produced the lowest-quality output.
+
+**Bottom line:** for this style of work, the OpenAI `gpt-5.4`/`gpt-5.5` family offers the best
+combination of quality, speed, and cost and is the recommended default; `kimi-k2.6` is a credible
+alternative where an OpenAI model isn't available. One reliability caveat worth noting: even a
+"working" deliverable can contain subtle correctness bugs (devstral's token-counting script ran
+without errors but produced wrong numbers), so outputs still warrant review before they are
+trusted.
+
+---
+
 ## Coverage / completeness
 
 | Model | analyze-runs | jazz plan | nextjs-app |
