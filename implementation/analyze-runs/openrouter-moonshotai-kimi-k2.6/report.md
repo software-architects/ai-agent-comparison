@@ -1,11 +1,13 @@
 # OpenCode Runs Analysis Report
 
-Generated: 2026-05-20T12:15:51.227Z
+Generated: 2026-05-20T13:04:38.651Z
 
 ## Summary
 
 | Subfolder | Run | Duration (ms) | Total Tokens | Cost |
 |-----------|-----|--------------:|-------------:|-----:|
+| analyze-runs | openrouter-deepseek-deepseek-v4-flash | 201.821 | 298.574 | 0.021394 |
+| analyze-runs | openrouter-deepseek-deepseek-v4-pro | 700.925 | 502.504 | 0.021246 |
 | analyze-runs | openrouter-mistralai-devstral-2512 | 348.443 | 1.019.395 | 0.164874 |
 | analyze-runs | openrouter-mistralai-mistral-medium-3-5 | 649.939 | 2.755.813 | 3.985142 |
 | analyze-runs | openrouter-moonshotai-kimi-k2.6 | 481.941 | 137.879 | 0.113972 |
@@ -34,6 +36,36 @@ Generated: 2026-05-20T12:15:51.227Z
 > **Note:** Per-tool token counts are approximations. Tokens are recorded per step (via `step-finish` parts) and split evenly across all tool calls within that step.
 
 ## analyze-runs
+
+### openrouter-deepseek-deepseek-v4-flash
+
+- **Duration:** 201.821 ms
+- **Total Tokens:** 298.574
+- **Cost:** $0.021394
+
+| Tool | Calls | Duration (ms) | Approx. Tokens |
+|------|------:|--------------:|---------------:|
+| task | 1 | 47.565 | 10.099 |
+| read | 5 | 510 | 49.404 |
+| grep | 2 | 460 | 17.742 |
+| bash | 2 | 118 | 57.478 |
+| write | 3 | 47 | 44.946 |
+| todowrite | 4 | 19 | 90.607 |
+
+### openrouter-deepseek-deepseek-v4-pro
+
+- **Duration:** 700.925 ms
+- **Total Tokens:** 502.504
+- **Cost:** $0.021246
+
+| Tool | Calls | Duration (ms) | Approx. Tokens |
+|------|------:|--------------:|---------------:|
+| task | 1 | 205.098 | 10.062 |
+| bash | 10 | 326 | 263.718 |
+| write | 3 | 38 | 34.912 |
+| read | 3 | 31 | 67.429 |
+| todowrite | 3 | 15 | 63.542 |
+| edit | 1 | 5 | 30.381 |
 
 ### openrouter-mistralai-devstral-2512
 

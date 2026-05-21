@@ -1,0 +1,16 @@
+{
+  "name": "@repo/console",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --import ./src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@repo/lib": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "typescript": "^6.0.3"
+  }
+}

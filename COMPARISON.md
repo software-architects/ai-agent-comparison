@@ -10,7 +10,8 @@ under `implementation/<task>/<model>/`.
   - `modify-jazz-chords-app` — write a **plan only** for adding named, saved configurations to an Angular app
   - `nextjs-app` — scaffold a pnpm-workspace Next.js skeleton (lib + web + console) meeting a strict quality bar
 - **Models:** Mistral `devstral-2512`, Mistral `mistral-medium-3-5`, Moonshot `kimi-k2.6`,
-  OpenAI `gpt-5.4-high`, `gpt-5.4-medium`, `gpt-5.5-high`, `gpt-5.5-low`, `gpt-5.5-medium`
+  OpenAI `gpt-5.4-high`, `gpt-5.4-medium`, `gpt-5.5-high`, `gpt-5.5-low`, `gpt-5.5-medium`,
+  DeepSeek `deepseek-v4-flash`, `deepseek-v4-pro`
 
 Grades are A–F based on how completely and correctly each output meets its prompt's
 requirements, judged from static inspection of the produced files (scripts/plans/code were
@@ -26,14 +27,19 @@ Across all three tasks, **OpenAI's models clearly led the field.** `gpt-5.5-high
 non-OpenAI model** — consistently solid and the most thorough on two of the three tasks. The
 **Mistral models trailed**: `mistral-medium-3-5` repeatedly missed hard requirements, and
 `devstral-2512` was the weakest overall, the only model to ship a genuinely broken result (an
-algorithmic bug in one task and a non-functional project skeleton in another).
+algorithmic bug in one task and a non-functional project skeleton in another). A late entrant,
+**DeepSeek `deepseek-v4-pro`, completed all three tasks** and matched the OpenAI leaders on the
+hardest one (an A-grade Next.js skeleton), with a strong A- jazz plan — its only weak spot the
+analyze-runs script.
 
 **Quality, speed, and cost did not move together**, which matters for tool selection. The
 top-quality OpenAI runs were also among the fastest and most economical (≈$1.50–$4.60 of API spend
 per model across all three tasks). By contrast, the lower-quality runs were often the expensive
 ones: `mistral-medium-3-5` cost the most (\~$9.79) while finishing mid-pack on quality, and
-`kimi-k2.6` spent \~74 minutes and 20M+ tokens on a single task. Cheapest is not safest either —
-`devstral-2512` was the least expensive (\~$0.46) but produced the lowest-quality output.
+`kimi-k2.6` spent \~74 minutes and 20M+ tokens on a single task. Cheapest is not always lowest
+quality, either: `devstral-2512` was very cheap (\~$0.46) but produced the worst output, whereas
+**DeepSeek was by far the most economical** — `deepseek-v4-pro` delivered its A-grade Next.js
+skeleton for \~$0.29 (vs. $2–$5.50 elsewhere) — though DeepSeek was also the slowest per task.
 
 **Bottom line:** for this style of work, the OpenAI `gpt-5.4`/`gpt-5.5` family offers the best
 combination of quality, speed, and cost and is the recommended default; `kimi-k2.6` is a credible
@@ -56,6 +62,8 @@ trusted.
 | openai-gpt-5.5-high | ✅ | ✅ | ✅ |
 | openai-gpt-5.5-low | ✅ | ✅ | ✅ |
 | openai-gpt-5.5-medium | ✅ | ✅ | ✅ |
+| deepseek-v4-flash | ✅ | ✅ | ✅ |
+| deepseek-v4-pro | ✅ | ✅ | ✅ |
 
 \* **Misfiled-then-corrected:** the gpt-5.4-high and gpt-5.4-medium jazz runs shared the
 gpt-5.5-medium working directory and originally wrote their plans *into*
@@ -65,16 +73,17 @@ gpt-5.5-medium working directory and originally wrote their plans *into*
 did **not** produce three competing plans — it produced exactly one
 (`SAVED_CONFIGURATIONS_PLAN.md`); the other two were cross-contamination.
 
-**All runs are now present** — every model has been run on all three tasks.
+**All 10 models are now complete** on all three tasks — no runs remain outstanding.
 
 ---
 
 ## Task 1 — `analyze-runs` (TypeScript script + Markdown report)
 
-All 8 models produced a working `analyze.ts` (Node stdlib only) and a populated report.
+All 10 models produced a working `analyze.ts` (Node stdlib only) and a populated report.
 **Notably, none hardcoded the repo root** — the anticipated common failure didn't happen; all
 implemented a correct dynamic walk-up to the folder containing `implementation/`. The real
-differentiators were the per-step token-split math and report quality.
+differentiators were the per-step token-split math, the total-tokens convention (whether cache
+tokens are counted), and report quality.
 
 | Model | Grade | Key findings |
 |---|:---:|---|
@@ -85,7 +94,9 @@ differentiators were the per-step token-split math and report quality.
 | openai-gpt-5.5-medium | **A-** | Cleanest step handling (resets on step-start *and* step-finish); best human-readable durations. |
 | openai-gpt-5.5-low | **A-** | Concise, correct, well-formatted; no standout extras. |
 | mistral-medium-3-5 | **B-** | Correct math + proper subfolder grouping, but bare/ambiguous cost formatting and a latent root-walk edge case. |
-| mistral-devstral-2512 | **D** | Two token defects (see note below): (1) per-tool bug — each step's tokens are added to *every* tool in the run, so per-tool tokens exceed run totals (bash ≈ 978k vs. 288k total); (2) total-tokens bug — sums only `input + output + reasoning` and **omits cache tokens**, so totals are far too low and disagree with all 7 other tools. Also fabricates cost. |
+| deepseek-v4-pro | **C+** | Clean ESM/TypeScript, correct dynamic root, correct per-tool split, and the nicest human-readable `en-US` formatting (per-task grouping, duration %). One real defect: total tokens **omit cache** (`input+output+reasoning` only), so the headline totals undercount and disagree with the cache-inclusive majority. |
+| deepseek-v4-flash | **C** | Same correct per-tool split + dynamic root, but the same cache-excluded total-tokens defect **and** de-DE locale formatting (`288.419` reads like a decimal). |
+| mistral-devstral-2512 | **D** | Two token defects (see note below): (1) per-tool bug — each step's tokens are added to *every* tool in the run, so per-tool tokens exceed run totals (bash ≈ 978k vs. 288k total); (2) total-tokens bug — sums only `input + output + reasoning` and **omits cache tokens**. Also fabricates cost. |
 
 > Note: the *number* of transcripts in each report differs because models ran at different
 > times (more `opencode-export.json` files existed later in the day) — a timing artifact, not a
@@ -95,15 +106,19 @@ differentiators were the per-step token-split math and report quality.
 > against ground truth computed from the raw JSON):**
 > - **Duration, cost, per-tool call counts and per-tool time — all 8 agree exactly** (totals:
 >   14,248,520 ms, $30.721942 over 24 runs). These are deterministic from `info.time`/`info.cost`.
-> - **Total tokens — 7 of 8 agree at 44,517,614** (`info.tokens` summed *including* `cache.read`/
->   `cache.write`, which matches ground truth). **devstral is the lone outlier at 9,222,143**
->   because it excludes cache tokens. Example, run `analyze-runs/gpt-5.5-high`: seven reports say
->   **484,995**, devstral says **43,139** (= input+output+reasoning only).
+> - **Total tokens — among the original 8, 7 agreed at 44,517,614** (`info.tokens` summed
+>   *including* `cache.read`/`cache.write`, which matches ground truth), with **devstral the lone
+>   outlier at 9,222,143** because it excludes cache tokens. Example, run `analyze-runs/gpt-5.5-high`:
+>   the cache-inclusive reports say **484,995**, devstral says **43,139** (= input+output+reasoning only).
+>   The later **DeepSeek models (`deepseek-v4-flash`, `deepseek-v4-pro`) make the same cache-excluded
+>   choice** — so 3 of the 10 scripts now undercount totals this way.
 > - **devstral's per-tool token column is also wrong** — it shows each tool with a near-total
->   figure (e.g. `bash 978,234`, `write 927,312`) that exceeds the run's own 288,419 total.
-> - The root cause is `info.tokens` being a breakdown object rather than a scalar "total"; 7 tools
->   summed all components, devstral summed a subset. Cosmetic: kimi and devstral print de-DE-locale
->   numbers (`484.995`); mistral-medium prints no thousands separators.
+>   figure (e.g. `bash 978,234`, `write 927,312`) that exceeds the run's own 288,419 total. (The
+>   DeepSeek scripts' per-tool splits are correct — only their totals exclude cache.)
+> - The root cause is `info.tokens` being a breakdown object rather than a scalar "total": some
+>   tools summed all components, others summed a subset. Cosmetic: kimi, devstral, and
+>   deepseek-v4-flash print de-DE-locale numbers (`484.995`); mistral-medium prints no thousands
+>   separators.
 
 ---
 
@@ -122,6 +137,8 @@ is separate; key ratings are nested in `KeysConfiguration`.
 | openai-gpt-5.4-medium | **A-** | Grounded; explicitly warns against the auto-save footgun (good judgment); two-key structure, migration, name-dialog, scope-boundary section. Minor: types `mode` as `…\|number` (loses string `5`/`-5`). |
 | openai-gpt-5.5-low | **A-** | Among the most thorough: grounded in real methods/signals, single clean file, Goals/Non-Goals, detailed apply-ordering with fallbacks, edge cases (incl. quota), UX copy, non-destructive migration. Same `mode: …\|number` typing nit as gpt-5.4-medium. |
 | openai-gpt-5.5-medium | **A-** | One clean, grounded plan: versioned store with `current` + `saved` + `activeSavedConfigurationId`, migration from legacy keys, deliberate explicit-load UX, full edge-case list. *(Revised up after the misfiling correction.)* |
+| deepseek-v4-pro | **A-** | Grounded, complete, plan-only: dedicated `ConfigurationService` (CRUD table), single `jazz-chord-configs` store + legacy migration, `isPlatformBrowser` SSR guard, ASCII UI mockup, edge-case table, duplicate feature, and `mode` correctly typed as string. Doesn't catch the `setCustomExercise` persistence bug or detail the apply-ordering as deeply as the two A plans. |
+| deepseek-v4-flash | **A-** | Grounded and complete: single `jazzConfigurations` store + migration, `ConfigurationStorageService` (CRUD + duplicate), standalone dialog modeled on the real `KeysDialogComponent`, ASCII mockup, explicit-save UX. Notably flags the **real SSR bug** (constructor `localStorage` access throws). Minor: `mode` typed as `…\|number`. |
 | mistral-medium-3-5 | **C+** | Overstepped into near-complete implementation code; has a syntax-error method name (`save CurrentAsNew`) and stray untranslated Chinese text. |
 | mistral-devstral-2512 | **C** | Correctly plan-only but thinnest data model (no versioning/active-id), no migration strategy, weak custom-exercise/load handling. |
 
@@ -132,13 +149,15 @@ is separate; key ratings are nested in `KeysConfiguration`.
 Required: pnpm workspace (`packages/lib`, `apps/web`, `apps/console`), TS strict, **Biome only**
 (no ESLint/Prettier), **Vitest browser mode** for the React component test, Playwright e2e,
 Next.js App Router, latest deps — and **zero addition logic in `apps/web`** (every `+` lives in
-`packages/lib`). All 7 correctly kept the arithmetic in the lib. The big separators were Vitest
+`packages/lib`). All 10 correctly kept the arithmetic in the lib. The big separators were Vitest
 **browser mode** and how the lib is wired into the app.
 
 | Model | Grade | ~Criteria | Key findings |
 |---|:---:|:---:|---|
 | openai-gpt-5.5-high | **A** | ~8/8 | Cleanest source-export + `transpilePackages` wiring; genuine browser component test; no committed build cruft. |
 | openai-gpt-5.4-high | **A** | ~8/8 | Best logic separation (dedicated `visualization.ts` in lib); `vitest-browser-react` test; has an `outdated` script. |
+| deepseek-v4-pro | **A** | ~8/8 | Clean source-import wiring, real Vitest browser mode, no `+` leak, all-latest aligned deps (Next 16/React 19); only nuance is relying on Turbopack's implicit transpile rather than explicit `transpilePackages`. Best of the non-OpenAI skeletons. |
+| deepseek-v4-flash | **A** | ~8/8 | Same clean source-export + `transpilePackages` wiring and real Vitest browser mode as pro; no `+` leak; correct Next 16/React 19. Only a stray gitignored `.next/`/`test-results/` left in the snapshot. |
 | openai-gpt-5.4-medium | **A-** | ~8/8 | Complete; deliberate `minimumReleaseAgeExclude` to satisfy the "outdated" constraint; RTL `fireEvent` in browser mode is fine. |
 | openai-gpt-5.5-medium | **A-** | ~8/8 | Clean; only nit is RTL deps hoisted from root rather than declared in `apps/web`. |
 | openai-gpt-5.5-low | **A-** | ~7.5/8 | Correct browser mode + clean source-export/`transpilePackages` wiring; no `+` leak into `apps/web`; coherent Next 16 / React 19. Held back only by blanket `"latest"` specifiers and a couple of committed build artifacts (no `.gitignore`). |
@@ -160,15 +179,23 @@ Next.js App Router, latest deps — and **zero addition logic in `apps/web`** (e
 | openai-gpt-5.5-medium | A- | A- | A- | **3.7** |
 | openai-gpt-5.5-low | A- | A- | A- | **3.7** |
 | moonshot-kimi-k2.6 | A- | A- | B+ | **3.57** |
+| deepseek-v4-pro | C+ | A- | A | **3.33** |
+| deepseek-v4-flash | C | A- | A | **3.23** |
 | mistral-medium-3-5 | B- | C+ | C | **2.33** |
 | mistral-devstral-2512 | D | C | D | **1.33** |
+
+Both DeepSeek models completed all three tasks and rank mid-pack, pulled down only by their
+analyze-runs grade (the cache-excluded-tokens defect); each scored **A-/A** on the other two.
 
 ### Takeaways
 
 1. **The OpenAI family dominates.** `gpt-5.5-high` and `gpt-5.4-high` are essentially flawless
    across all three tasks; `gpt-5.4-medium` and `gpt-5.5-medium` are close behind.
-2. **`kimi-k2.6` is the strongest non-OpenAI model** — consistently good, the most complete
-   analyze-runs report, and the best UI mockups in the jazz plan.
+2. **`kimi-k2.6` is the strongest non-OpenAI model** across all three tasks — consistently good,
+   the most complete analyze-runs report, and the best UI mockups in the jazz plan. **Both DeepSeek
+   models completed all three tasks strongly** (each A nextjs-app, A- jazz plan, C/C+ analyze-runs)
+   at by far the lowest cost, held back only by the cache-excluded-tokens defect their analyze-runs
+   scripts share with devstral. DeepSeek is, however, the slowest per task.
 3. **Mistral models lag.** `mistral-medium-3-5` repeatedly misses hard requirements (jsdom vs.
    Vitest browser mode, overstepping "plan only") with polish issues; `devstral-2512` is the
    clear bottom, the only model with a real algorithmic bug (Task 1) and a structurally broken
@@ -183,15 +210,16 @@ Next.js App Router, latest deps — and **zero addition logic in `apps/web`** (e
   executing the scripts. "~N/8 criteria" for nextjs-app is a static-analysis estimate.
 - `gpt-5.4-high` / `gpt-5.4-medium` jazz plans were relocated from the gpt-5.5-medium folder
   (see Coverage note); attribution was confirmed from the transcripts.
-- All 8 models have now been evaluated on all three tasks; no runs remain outstanding.
+- All 10 models have now been evaluated on all three tasks; no runs remain outstanding.
 
 ---
 
 ## Measured run statistics
 
-Measured directly from the 24 `opencode-export.json` transcripts (ground truth). Tokens include
-cache reads/writes; durations from `info.time`, cost from `info.cost`. (devstral's own report
-under-counts tokens — see the Task 1 note — but the figures below are the authoritative values.)
+Measured directly from the 30 `opencode-export.json` transcripts (ground truth). Tokens include
+cache reads/writes; durations from `info.time`, cost from `info.cost`. (The devstral and DeepSeek
+reports under-count tokens by excluding cache — see the Task 1 note — but the figures below are the
+authoritative values.)
 For the full per-tool breakdown of every run, see the gpt-5.4-high report:
 [`implementation/analyze-runs/openrouter-openai-gpt-5.4-high/report.md`](implementation/analyze-runs/openrouter-openai-gpt-5.4-high/report.md).
 
@@ -199,6 +227,8 @@ For the full per-tool breakdown of every run, see the gpt-5.4-high report:
 
 | Task | Model | Duration | Duration (ms) | Tokens | Tool calls | Cost (USD) |
 |---|---|---:|---:|---:|---:|---:|
+| analyze-runs | deepseek-v4-flash | 3m 21s | 201,821 | 298,574 | 17 | $0.021394 |
+| analyze-runs | deepseek-v4-pro | 11m 40s | 700,925 | 502,504 | 21 | $0.021246 |
 | analyze-runs | mistral-devstral-2512 | 5m 48s | 348,443 | 1,019,395 | 42 | $0.164874 |
 | analyze-runs | mistral-medium-3-5 | 10m 49s | 649,939 | 2,755,813 | 60 | $3.985142 |
 | analyze-runs | moonshot-kimi-k2.6 | 8m 01s | 481,941 | 137,879 | 13 | $0.113972 |
@@ -207,6 +237,8 @@ For the full per-tool breakdown of every run, see the gpt-5.4-high report:
 | analyze-runs | openai-gpt-5.5-high | 3m 40s | 220,352 | 484,995 | 24 | $0.688873 |
 | analyze-runs | openai-gpt-5.5-low | 4m 46s | 286,157 | 178,635 | 16 | $0.653188 |
 | analyze-runs | openai-gpt-5.5-medium | 1m 53s | 113,960 | 174,199 | 13 | $0.440915 |
+| modify-jazz-chords-app | deepseek-v4-flash | 4m 17s | 257,882 | 232,284 | 20 | $0.015059 |
+| modify-jazz-chords-app | deepseek-v4-pro | 14m 55s | 895,166 | 289,827 | 25 | $0.101596 |
 | modify-jazz-chords-app | mistral-devstral-2512 | 1m 42s | 102,223 | 214,321 | 10 | $0.064341 |
 | modify-jazz-chords-app | mistral-medium-3-5 | 1m 10s | 70,353 | 160,462 | 12 | $0.274875 |
 | modify-jazz-chords-app | moonshot-kimi-k2.6 | 3m 50s | 230,672 | 145,249 | 16 | $0.101804 |
@@ -215,6 +247,8 @@ For the full per-tool breakdown of every run, see the gpt-5.4-high report:
 | modify-jazz-chords-app | openai-gpt-5.5-high | 7m 40s | 460,690 | 485,771 | 38 | $1.088018 |
 | modify-jazz-chords-app | openai-gpt-5.5-low | 2m 30s | 150,453 | 324,086 | 29 | $0.560065 |
 | modify-jazz-chords-app | openai-gpt-5.5-medium | 4m 04s | 244,415 | 412,263 | 36 | $0.907562 |
+| nextjs-app | deepseek-v4-flash | 38m 19s | 2,299,987 | 11,350,265 | 198 | $0.483043 |
+| nextjs-app | deepseek-v4-pro | 27m 39s | 1,659,270 | 4,170,403 | 124 | $0.290772 |
 | nextjs-app | mistral-devstral-2512 | 10m 46s | 646,024 | 1,962,283 | 77 | $0.227189 |
 | nextjs-app | mistral-medium-3-5 | 18m 17s | 1,097,676 | 3,870,884 | 101 | $5.532510 |
 | nextjs-app | moonshot-kimi-k2.6 | 74m 00s | 4,440,289 | 20,583,152 | 235 | $5.508526 |
@@ -223,12 +257,14 @@ For the full per-tool breakdown of every run, see the gpt-5.4-high report:
 | nextjs-app | openai-gpt-5.5-high | 14m 33s | 873,000 | 2,054,374 | 74 | $2.830410 |
 | nextjs-app | openai-gpt-5.5-low | 14m 03s | 843,758 | 2,346,930 | 70 | $2.077880 |
 | nextjs-app | openai-gpt-5.5-medium | 13m 10s | 790,461 | 1,681,697 | 60 | $2.023108 |
-| **All (24)** | | **237m 28s** | **14,248,520** | **44,517,614** | **1,143** | **$30.721942** |
+| **All (30)** | | **337m 43s** | **20,263,571** | **61,361,471** | **1,548** | **$31.655052** |
 
 ### Per-model totals (across all 3 tasks)
 
 | Model | Duration | Tokens | Tool calls | Cost (USD) |
 |---|---:|---:|---:|---:|
+| deepseek-v4-flash | 45m 59s | 11,881,123 | 235 | $0.519496 |
+| deepseek-v4-pro | 54m 15s | 4,962,734 | 170 | $0.413614 |
 | mistral-devstral-2512 | 18m 16s | 3,195,999 | 129 | $0.456403 |
 | mistral-medium-3-5 | 30m 17s | 6,787,159 | 173 | $9.792526 |
 | moonshot-kimi-k2.6 | 85m 52s | 20,866,280 | 264 | $5.724302 |
@@ -239,5 +275,7 @@ For the full per-tool breakdown of every run, see the gpt-5.4-high report:
 | openai-gpt-5.5-medium | 19m 08s | 2,268,159 | 109 | $3.371585 |
 
 > kimi-k2.6's nextjs-app run is a major outlier — 74 min, 20.6M tokens, 235 tool calls — far above
-> every other run. Note also that cost doesn't track tokens: devstral is the cheapest overall
-> ($0.46) despite ~3.2M tokens, while mistral-medium-3-5 is the most expensive ($9.79).
+> every other run. Cost doesn't track tokens: **DeepSeek is dramatically the cheapest** (pro's
+> nextjs-app cost just $0.29 and flash's $0.48, vs. $2–$5.50 for the same task elsewhere; analyze-runs
+> runs were ~$0.02), whereas mistral-medium-3-5 is the most expensive ($9.79 total). DeepSeek is also
+> the **slowest** per task — flash's nextjs-app took 38m and pro's analyze-runs run 11m 40s.

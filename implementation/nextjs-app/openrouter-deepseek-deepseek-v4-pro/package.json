@@ -1,0 +1,16 @@
+{
+  "name": "ai-agent-comparison",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
+    "lint": "biome check",
+    "format": "biome format --write",
+    "typecheck": "pnpm --recursive typecheck",
+    "test": "pnpm --recursive test",
+    "e2e": "pnpm --filter web e2e"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.15"
+  }
+}
